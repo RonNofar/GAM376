@@ -75,6 +75,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ColorManager.cs" />
+    <Compile Include="Assets\EnemySpawnerHandler.cs" />
     <Compile Include="Assets\Extra Assets\Scripts\BackgroundParallax.cs" />
     <Compile Include="Assets\Extra Assets\Scripts\BackgroundPropSpawner.cs" />
     <Compile Include="Assets\Extra Assets\Scripts\Bomb.cs" />
@@ -105,6 +107,7 @@
     <Compile Include="Assets\Scripts\ParticleHandler.cs" />
     <Compile Include="Assets\Scripts\RTool.cs" />
     <Compile Include="Assets\StickManController.cs" />
+    <Compile Include="Assets\enemyScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Extra Assets\!PSRC Pixel Sprites Reactorcore\!PSRC ReadMe.txt" />

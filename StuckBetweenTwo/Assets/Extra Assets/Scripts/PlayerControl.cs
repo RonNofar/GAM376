@@ -5,6 +5,10 @@ namespace R
 {
     public class PlayerControl : MonoBehaviour
     {
+        [Header("Player Variables")]
+        [SerializeField]
+        private float playerHealth = 100f;
+
         [HideInInspector]
         public bool facingRight = true;         // For determining which way the player is currently facing.
         [HideInInspector]
@@ -28,6 +32,9 @@ namespace R
         private Transform myTransform;
         private Rigidbody myRigidbody;
         private Vector3 myPosition;
+
+        [Header("Color Variables")]
+        public ColorManager.eColors color = ColorManager.eColors.Blue;
 
         [Header("Slash Variable")]
         [SerializeField]
@@ -220,6 +227,19 @@ namespace R
             yield return new WaitForSeconds(secs);
             Destroy(toDestroy);
         }
+
+        public void DamagePlayer(float damage)
+        {
+            if (playerHealth-damage<0)
+            {
+                playerHealth = 0f;
+            } 
+            else
+            {
+                playerHealth -= damage;
+            }
+        }
+
     }
     
 }
