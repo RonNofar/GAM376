@@ -35,6 +35,8 @@ namespace R
 
         [Header("Color Variables")]
         public ColorManager.eColors color = ColorManager.eColors.Blue;
+        [SerializeField]
+        private OrbUIHandler orbUI;
 
         [Header("Slash Variable")]
         [SerializeField]
@@ -54,6 +56,13 @@ namespace R
 
         private bool isSlash = false;
         private float currTime = 0f;
+
+        private ColorManager.eColors[] orbColors =
+        { // 0 -> current, 1 -> next, last -> prev
+            ColorManager.eColors.Blue,
+            ColorManager.eColors.Red,
+            ColorManager.eColors.Black
+        };
 
         void Awake()
         {
@@ -89,6 +98,20 @@ namespace R
                 if (isSlash && Time.time > currTime + slashDelay)
                 {
                     isSlash = false;
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.E))
+            { // next orb
+                if (orbColors[1] != ColorManager.eColors.Black)
+                {
+                    RotateOrbColors(1);
+                }
+            }
+            if (Input.GetKeyDown(KeyCode.Q))
+            { // previous orb
+                if (orbColors[orbColors.Length - 1] != ColorManager.eColors.Black)
+                {
+                    RotateOrbColors(-1);
                 }
             }
         }
@@ -220,6 +243,7 @@ namespace R
                     slashForce.RandomInRange * isRight,
                     0f), 
                 ForceMode2D.Impulse);
+            newSlash.GetComponent<SlashHandler>().SetColor(orbColors[0]);
             StartCoroutine(DestroyAfterSecs(newSlash, slashLife));
         }
         IEnumerator DestroyAfterSecs (GameObject toDestroy, float secs)
@@ -240,6 +264,53 @@ namespace R
             }
         }
 
+        public ColorManager.eColors[] GetOrbArray()
+        {
+            return orbColors;
+        }
+
+        public void RotateOrbColors(int direction)
+        { // direction > 0 = next, direction < 0 = prev. USE 1 and -1
+            int l = orbColors.Length;
+            if (direction > 0)
+            { // next
+                ColorManager.eColors temp = orbColors[0]; // first
+                for (int i = 0; i < l; ++i)
+                {
+                    if (i <= l - 2)
+                    { // if before last in array
+                        orbColors[i] = orbColors[i + 1];
+                    }
+                    else if (i == l - 1)
+                    { // if last in array
+                        orbColors[i] = temp;
+                    }
+
+                }
+            }
+            else if (direction < 0)
+            { // previous
+                ColorManager.eColors temp = orbColors[l-1]; // last
+                for (int i = l-1; i >= 0; --i)
+                {
+                    if (i > 0)
+                    { // if before first in array
+                        orbColors[i] = orbColors[i - 1];
+                    }
+                    else if (i == 0) 
+                    { // if first in array
+                        orbColors[i] = temp;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("Error: the method RotateOrbsColor received an unknown direction");
+            }
+            Debug.Log(orbColors[0]+" "+orbColors[1] + " " +orbColors[2]);
+            orbUI.UpdateOrbs(this);
+        }
+        
     }
     
 }

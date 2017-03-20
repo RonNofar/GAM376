@@ -101,11 +101,13 @@
     <Compile Include="Assets\FollowObject.cs" />
     <Compile Include="Assets\GrabController.cs" />
     <Compile Include="Assets\HealthBarHandler.cs" />
+    <Compile Include="Assets\OrbUIHandler.cs" />
     <Compile Include="Assets\Scripts\GameMaster.cs" />
     <Compile Include="Assets\Scripts\ObjectFollow.cs" />
     <Compile Include="Assets\Scripts\ParticleGenerator.cs" />
     <Compile Include="Assets\Scripts\ParticleHandler.cs" />
     <Compile Include="Assets\Scripts\RTool.cs" />
+    <Compile Include="Assets\SlashHandler.cs" />
     <Compile Include="Assets\StickManController.cs" />
     <Compile Include="Assets\enemyScript.cs" />
   </ItemGroup>
