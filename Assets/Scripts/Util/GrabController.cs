@@ -63,6 +63,8 @@ namespace KRaB.Split.Util
 
         private Transform targetSpriteTransform;
 
+        private List<GameObject> objs = new List<GameObject>();
+
         private void Awake()
         {
             SetInitialReferences();
@@ -81,7 +83,7 @@ namespace KRaB.Split.Util
                     hitTransform = hitObj.GetComponent<Transform>();
                     if (hitTransform.tag == "PickUp")
                     {
-                        isGrabbing = true;
+                        //isGrabbing = true;
                         isTargetAnimation = true;
                     }
                 }
@@ -105,7 +107,12 @@ namespace KRaB.Split.Util
                     Y,
                     Z
                 );
-            } else if (isGrabbing)
+            }
+            else if (isGrabbing)
+            {
+
+            }
+            /*else if (isGrabbing)
             { // if player indicates grab
                 bool isMoving = ObjectFollow.FollowObject(
                     myTransform,
@@ -146,7 +153,7 @@ namespace KRaB.Split.Util
                         isDoneGrabbing = false;
                     }
                 }
-            }
+            }*/
         }
 
         private void SetInitialReferences()
@@ -188,6 +195,16 @@ namespace KRaB.Split.Util
             yield return new WaitForSeconds(seconds);
             isGrabbing = false;
             isDoneGrabbing = true;
+        }
+
+        public void SetIsGrabbing(bool b)
+        {
+            isGrabbing = b;
+        }
+
+        public void AddToObjList(GameObject obj)
+        {
+            if (!objs.Contains(obj)) objs.Add(obj);
         }
     }
 }

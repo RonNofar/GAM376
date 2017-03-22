@@ -60,6 +60,17 @@ namespace KRaB.Split.Player
         private Transform shovelPivotTransform;
         private float shovelAngle;
         private bool isShovel = false;
+
+        [Header("Shovel Curve Variables")]
+        [SerializeField]
+        private float curveTime = 5f;
+        [SerializeField]
+        private float curveDampner = 4f; // 4 is recommended (maybe 3)
+
+        private Transform bucketTransform;
+        private Transform toShovelTransform;
+        private float curveStartTime = 0f;
+        private float distance = 5f;
         private bool isShovelCurve = false;
 
         [Header("Slash Variable")]
@@ -100,6 +111,7 @@ namespace KRaB.Split.Player
                 Debug.Log("Error: unable to get Transform as component");
             }
             SetInitialReferences();
+            UpdateBucketColor(orbColors[0]);
         }
 
         #region Initializers
@@ -125,11 +137,12 @@ namespace KRaB.Split.Player
             {
                 try
                 {
+                    bucketTransform = bucket.GetComponent<Transform>();
                     bucketSR = bucket.GetComponent<SpriteRenderer>();
                 }
                 catch
                 {
-                    Debug.Log("Error: could not get Transform component from bucket object");
+                    Debug.Log("Error: could not get Transform or SpriteRenderer component from bucket object");
                 }
             }
             else
@@ -283,17 +296,9 @@ namespace KRaB.Split.Player
         void Shovel()
         {
             isShovel = true;
+            isShovelCurve = true;
             // call shovel handler
 
-        }
-
-        public void ApplyShovelCurve(GameObject toShovel)
-        {
-            // x = ((1-t)^3)*P0X + 3*((1-t)^2)*t*P1X + 3(1-t)*(t^2)*P2X + (t^3)*P3X
-            // float timeRatio = (Time.time - currTime) / shovelCurveTime
-            //Debug.Log("Shoveled");
-            //Debug.Log(facingRight ? 12f : -12f);
-            toShovel.GetComponent<Rigidbody2D>().AddForce(new Vector2(facingRight ? 12f : -12f, 25), ForceMode2D.Impulse);
         }
 
         void ShovelAnimation()
@@ -302,6 +307,7 @@ namespace KRaB.Split.Player
             //Debug.Log("Add: " + addAngle);
             //Debug.Log("Z: " + bucketTransform.localEulerAngles.z + " + " + addAngle + " | Total: " + (bucketTransform.localEulerAngles.z + addAngle));
             //addAngle = facingRight ? addAngle : -addAngle;
+            if ((Time.time - currTime) > shovelDelay / 2) isShovelCurve = false;
             shovelPivotTransform.localEulerAngles = new Vector3(
                 shovelPivotTransform.localEulerAngles.x,
                 shovelPivotTransform.localEulerAngles.y,
@@ -318,6 +324,22 @@ namespace KRaB.Split.Player
                 shovelPivotTransform.eulerAngles.y,
                 shovelAngle
             );
+        }
+
+        public void ApplyShovelCurve(GameObject toShovel)
+        {
+            Enemy.enemyScript es = toShovel.GetComponent<Enemy.enemyScript>();
+            es.SetCatcherTransform(ref bucketTransform);
+            es.SetTotalTime(curveTime);
+            es.SetCurveDampner(curveDampner);
+            es.SetIsStart(true);
+            //toShovelTransform = toShovel.GetComponent<Transform>();
+
+            // x = ((1-t)^3)*P0X + 3*((1-t)^2)*t*P1X + 3(1-t)*(t^2)*P2X + (t^3)*P3X
+            // float timeRatio = (Time.time - currTime) / shovelCurveTime
+            //Debug.Log("Shoveled");
+            //CurveThrow thrw = new CurveThrow(ref bucketTrans, ref toShovelTrans, 5f);
+            //toShovel.GetComponent<Rigidbody2D>().AddForce(new Vector2(facingRight ? 12f : -12f, 25), ForceMode2D.Impulse);
         }
 
         void Attack()
@@ -423,7 +445,7 @@ namespace KRaB.Split.Player
 
         public bool GetIsShovel()
         {
-            return isShovel;
+            return isShovel && isShovelCurve;
         }
     }
     

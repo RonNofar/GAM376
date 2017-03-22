@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using KRaB.Split.UI;
 
 namespace KRaB.Split.Enemy
@@ -15,8 +16,21 @@ namespace KRaB.Split.Enemy
         private float yMin = -100f;
 
         public Player.PlayerControl player;
+        public Util.GrabController bucket;
 
         private Color color;
+
+        private Transform myTransform;
+        private Transform cTransform;
+
+        private bool isStart = false;
+
+        private bool isCurve = false;
+        private Vector3 distance = new Vector3(0,10f,0);
+        private float startTime = 0f;
+        private float totalTime = 5f;
+        private float curveDampner = 4f;
+        private Vector3 originalPosition;
 
         private void Awake()
         {
@@ -29,6 +43,14 @@ namespace KRaB.Split.Enemy
             if (gameObject.transform.position.y < yMin)
             {
                 Destroy(gameObject);
+            }
+            if(isStart)
+            {
+                ApplyShovelCurve(totalTime);
+            }
+            else if (!isStart && isCurve)
+            {
+                isCurve = false;
             }
         }
 
@@ -68,6 +90,57 @@ namespace KRaB.Split.Enemy
         {
             GetComponent<SpriteRenderer>().color = ColorManager.GetColor(colorType);
             player = GameObject.FindWithTag("Player").GetComponent<Player.PlayerControl>();
+            myTransform = GetComponent<Transform>();
+        }
+
+        public void ApplyShovelCurve(float totalTime)
+        {
+            if (!isCurve)
+            {
+                originalPosition = myTransform.position;
+                distance = new Vector3(0f, (Vector3.Distance(originalPosition, cTransform.position))/curveDampner, 0f);
+                Debug.Log(Vector3.Distance(originalPosition, cTransform.position));
+                startTime = Time.time;
+                isCurve = true;
+            }
+            //Debug.Log(myTransform.position + distance);
+            float timeRatio = (Time.time - startTime) / totalTime;
+            timeRatio = (timeRatio > 1) ? 1 : timeRatio;
+            myTransform.position = CurveThrow.CalculateBezierPoint(
+                timeRatio,
+                myTransform.position,
+                myTransform.position + distance,
+                cTransform.position,
+                cTransform.position + distance
+            );
+
+            if(timeRatio == 1)
+            {
+                isStart = false;
+                bucket.AddToObjList(gameObject);
+            }
+            
+            
+        }
+
+        public void SetCatcherTransform(ref Transform t)
+        {
+            cTransform = t;
+        }
+
+        public void SetTotalTime(float t)
+        {
+            totalTime = t;
+        }
+
+        public void SetIsStart(bool b)
+        {
+            isStart = b;
+        }
+
+        public void SetCurveDampner(float f)
+        {
+            curveDampner = f;
         }
     }
 }

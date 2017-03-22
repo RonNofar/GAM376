@@ -15,6 +15,7 @@ TagManager:
   - HealthBar
   - PickUp
   - slash
+  - Bucket
   layers:
   - Default
   - TransparentFX

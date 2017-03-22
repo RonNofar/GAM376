@@ -8,6 +8,8 @@ namespace KRaB.Split.Shovel
 
         [SerializeField]
         private Player.PlayerControl player;
+        [SerializeField]
+        private float recondsTillShovellable = 3f;
 
         public static bool isCollision = false;
 
@@ -45,10 +47,24 @@ namespace KRaB.Split.Shovel
                     {
                         player.ApplyShovelCurve(col.gameObject);
                         objs.Add(col.gameObject);
+                        StartCoroutine(RemoveFromListInSecs(col.gameObject, recondsTillShovellable));
                     }
                 }
             }
             isCollision = true;
+        }
+
+        private IEnumerator RemoveFromListInSecs(GameObject obj, float secs)
+        {
+            yield return new WaitForSeconds(secs);
+            try
+            {
+                objs.Remove(obj);
+            }
+            catch
+            {
+                Debug.Log("Attention: ShovelHandler hiccup");
+            }
         }
     }
 }
