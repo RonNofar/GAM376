@@ -64,7 +64,7 @@ namespace KRaB.Split
         public static Vector3 CalculateBezierPoint(float t,
             Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
         {
-            Debug.Log("Calculating");
+            //Debug.Log("Calculating");
             float u = 1 - t;
             float tt = t * t;
             float uu = u * u;

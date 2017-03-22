@@ -47,6 +47,8 @@ namespace KRaB.Split.Util
         [Header("Other Stuff")]
         [SerializeField]
         private GameObject targetSpritePrefab;
+        [SerializeField]
+        private UI.ColorManager.eColors color = UI.ColorManager.eColors.Black;
 
         private Transform myTransform;
         private Transform toFollow;
@@ -197,6 +199,11 @@ namespace KRaB.Split.Util
             isDoneGrabbing = true;
         }
 
+        public void SetColor(UI.ColorManager.eColors c)
+        {
+            color = c;
+        }
+
         public void SetIsGrabbing(bool b)
         {
             isGrabbing = b;
@@ -204,7 +211,16 @@ namespace KRaB.Split.Util
 
         public void AddToObjList(GameObject obj)
         {
-            if (!objs.Contains(obj)) objs.Add(obj);
+            //if (!objs.Contains(obj)) objs.Add(obj);
+            if (obj.GetComponent<Enemy.enemyScript>().GetEnumColor() == color)
+            {
+                Destroy(obj);
+            }
         }
+        /*
+        private IEnumerator AnalyseObject()
+        {
+            yield return new null;
+        }*/
     }
 }

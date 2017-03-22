@@ -32,6 +32,9 @@ namespace KRaB.Split.Enemy
         private float curveDampner = 4f;
         private Vector3 originalPosition;
 
+        private SpriteRenderer enemySR;
+        private ColorManager.eColors lastColor = ColorManager.eColors.Black;
+
         private void Awake()
         {
             InitializeEnemy();
@@ -51,6 +54,11 @@ namespace KRaB.Split.Enemy
             else if (!isStart && isCurve)
             {
                 isCurve = false;
+            }
+            if (lastColor != colorType)
+            {
+                lastColor = colorType;
+                UpdateSpriteRendererColor(colorType);
             }
         }
 
@@ -88,9 +96,11 @@ namespace KRaB.Split.Enemy
 
         private void InitializeEnemy()
         {
-            GetComponent<SpriteRenderer>().color = ColorManager.GetColor(colorType);
+            enemySR = GetComponent<SpriteRenderer>();
+            //UpdateSpriteRendererColor(colorType);
             player = GameObject.FindWithTag("Player").GetComponent<Player.PlayerControl>();
             myTransform = GetComponent<Transform>();
+            bucket = GameObject.FindWithTag("Bucket").GetComponent<Util.GrabController>();
         }
 
         public void ApplyShovelCurve(float totalTime)
@@ -99,7 +109,7 @@ namespace KRaB.Split.Enemy
             {
                 originalPosition = myTransform.position;
                 distance = new Vector3(0f, (Vector3.Distance(originalPosition, cTransform.position))/curveDampner, 0f);
-                Debug.Log(Vector3.Distance(originalPosition, cTransform.position));
+                //Debug.Log(Vector3.Distance(originalPosition, cTransform.position));
                 startTime = Time.time;
                 isCurve = true;
             }
@@ -141,6 +151,19 @@ namespace KRaB.Split.Enemy
         public void SetCurveDampner(float f)
         {
             curveDampner = f;
+        }
+
+
+        public ColorManager.eColors GetEnumColor()
+        {
+            return colorType;
+        }
+
+        public void UpdateSpriteRendererColor(ColorManager.eColors color)
+        {
+            //Debug.Log("Update to: " + color + " | Time: " + Time.time);
+            colorType = color;
+            enemySR.color = ColorManager.GetColor(color);
         }
     }
 }

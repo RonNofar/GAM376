@@ -2,24 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameMaster : MonoBehaviour {
+namespace KRaB.Split.Manager
+{
+    public class GameMaster : MonoBehaviour {
 
-    public GameObject soccerball;
-    public int balls;
+        public GameObject toSpawn;
+        public int numberOfSpawns;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown(KeyCode.Z))
-        {
-            for (int i = 0; i < balls; ++i)
+        // Use this for initialization
+        void Start() {
+
+        }
+
+        // Update is called once per frame
+        void Update() {
+            if (Input.GetKeyDown(KeyCode.Z))
             {
-                Instantiate(soccerball);
+                for (int i = 0; i < numberOfSpawns; ++i)
+                {
+                    GameObject o = Instantiate(toSpawn);
+                    o.GetComponent<Enemy.enemyScript>().
+                        UpdateSpriteRendererColor(
+                            (Random.Range(0f, 1f) > 0.5f) ? UI.ColorManager.eColors.Blue : UI.ColorManager.eColors.Red
+                        );
+                }
             }
         }
-	}
+    }
 }

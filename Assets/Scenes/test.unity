@@ -590,8 +590,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96dc828d32896e841acb0066678c82b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soccerball: {fileID: 1736889495143544, guid: ca42846f30c5dfd4b89b06d1cd9c6439, type: 2}
-  balls: 1
+  toSpawn: {fileID: 1736889495143544, guid: ca42846f30c5dfd4b89b06d1cd9c6439, type: 2}
+  numberOfSpawns: 1
 --- !u!4 &288113719
 Transform:
   m_ObjectHideFlags: 0
@@ -1728,6 +1728,7 @@ MonoBehaviour:
   grabMaxSpeed: 2
   targetSpritePrefab: {fileID: 1890493924233584, guid: b4e961c1bc0bd5142a38c7ffcfcd9390,
     type: 2}
+  color: 0
 --- !u!1 &751066915
 GameObject:
   m_ObjectHideFlags: 0

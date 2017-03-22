@@ -45,6 +45,7 @@ namespace KRaB.Split.Player
         [SerializeField]
         private GameObject bucket;
 
+        private GrabController bucketScript;
         private SpriteRenderer bucketSR;
 
         [Header("Shovel Variables")]
@@ -139,10 +140,11 @@ namespace KRaB.Split.Player
                 {
                     bucketTransform = bucket.GetComponent<Transform>();
                     bucketSR = bucket.GetComponent<SpriteRenderer>();
+                    bucketScript = bucket.GetComponent<GrabController>();
                 }
                 catch
                 {
-                    Debug.Log("Error: could not get Transform or SpriteRenderer component from bucket object");
+                    Debug.Log("Error: could not get Transform or SpriteRenderer or script component from bucket object");
                 }
             }
             else
@@ -441,6 +443,7 @@ namespace KRaB.Split.Player
         public void UpdateBucketColor(ColorManager.eColors color)
         {
             bucketSR.color = ColorManager.GetColor(color);
+            bucketScript.SetColor(color);
         } 
 
         public bool GetIsShovel()
