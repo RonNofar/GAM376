@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using KRaB.Split.UI;
-using R;
 
 namespace KRaB.Split.Enemy
 {
@@ -12,8 +11,10 @@ namespace KRaB.Split.Enemy
         private ColorManager.eColors colorType;
         [SerializeField]
         private float damage = 10f;
+        [SerializeField]
+        private float yMin = -100f;
 
-        public PlayerControl player;
+        public Player.PlayerControl player;
 
         private Color color;
 
@@ -25,7 +26,10 @@ namespace KRaB.Split.Enemy
         // Update is called once per frame
         void Update()
         {
-
+            if (gameObject.transform.position.y < yMin)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D col) // trigger might not work with this
@@ -47,6 +51,7 @@ namespace KRaB.Split.Enemy
         private void OnTriggerEnter2D(Collider2D col)
         {
             Transform colTransform = col.gameObject.GetComponent<Transform>();
+            /*
             Player.SlashHandler colObj = colTransform.GetComponent<Player.SlashHandler>();
             if (colObj.tag != null)
             {
@@ -56,12 +61,13 @@ namespace KRaB.Split.Enemy
                     Destroy(gameObject);
                 }
             }
+            */
         }
 
         private void InitializeEnemy()
         {
             GetComponent<SpriteRenderer>().color = ColorManager.GetColor(colorType);
-            
+            player = GameObject.FindWithTag("Player").GetComponent<Player.PlayerControl>();
         }
     }
 }

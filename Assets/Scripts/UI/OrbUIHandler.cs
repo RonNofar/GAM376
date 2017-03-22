@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using R;
 
 
 namespace KRaB.Split.UI
@@ -20,14 +19,14 @@ namespace KRaB.Split.UI
 
         [Header("Player Controller")]
         [SerializeField]
-        private PlayerControl player;
+        private Player.PlayerControl player;
 
         void Start()
         {
             UpdateOrbs(player);
         }
 
-        public void UpdateOrbs(PlayerControl player)
+        public void UpdateOrbs(Player.PlayerControl player)
         {
             ColorManager.eColors[] orbs = player.GetOrbArray();
             int l = orbs.Length;

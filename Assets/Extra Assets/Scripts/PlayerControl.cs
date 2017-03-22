@@ -4,7 +4,7 @@ using KRaB.Split.UI;
 using KRaB.Split.Util;
 using KRaB.Split.Player;
 
-namespace R
+namespace KRaB.Split.Player
 {
     public class PlayerControl : MonoBehaviour
     {
@@ -37,9 +37,30 @@ namespace R
         private Vector3 myPosition;
 
         [Header("Color Variables")]
-        public ColorManager.eColors color = ColorManager.eColors.Blue;
+        //public ColorManager.eColors color = ColorManager.eColors.Blue;
         [SerializeField]
         private OrbUIHandler orbUI;
+
+        [Header("Bucket Variables")]
+        [SerializeField]
+        private GameObject bucket;
+
+        private SpriteRenderer bucketSR;
+
+        [Header("Shovel Variables")]
+        [SerializeField]
+        private GameObject shovelPivot;
+        [SerializeField]
+        private float shovelLife = 1f;
+        [SerializeField]
+        private float shovelDelay = 0.5f;
+        [SerializeField]
+        private float maxAngle = 90f;
+
+        private Transform shovelPivotTransform;
+        private float shovelAngle;
+        private bool isShovel = false;
+        private bool isShovelCurve = false;
 
         [Header("Slash Variable")]
         [SerializeField]
@@ -78,30 +99,70 @@ namespace R
             } catch {
                 Debug.Log("Error: unable to get Transform as component");
             }
+            SetInitialReferences();
         }
 
+        #region Initializers
+        void SetInitialReferences()
+        {
+            if (shovelPivot != null)
+            {
+                try
+                {
+                    shovelPivotTransform = shovelPivot.GetComponent<Transform>();
+                    shovelAngle = shovelPivotTransform.eulerAngles.z;
+                }
+                catch
+                {
+                    Debug.Log("Error: could not get Transform component from shovel object");
+                }
+            }
+            else
+            {
+                Debug.Log("Error: reference to shovelPivot object is null");
+            }
+            if (bucket != null)
+            {
+                try
+                {
+                    bucketSR = bucket.GetComponent<SpriteRenderer>();
+                }
+                catch
+                {
+                    Debug.Log("Error: could not get Transform component from bucket object");
+                }
+            }
+            else
+            {
+                Debug.Log("Error: reference to bucket object is null");
+            }
+        }
+        #endregion
 
         void Update()
         {
+            //Debug.Log("Time: " + Time.time);
             // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
             grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
 
             // If the jump button is pressed and the player is grounded then the player should jump.
             if (Input.GetButtonDown("Jump") && grounded)
                 jump = true;
-            if (Input.GetButton("Fire2")) Suck();
+            //if (Input.GetButton("Fire2")) Suck();
             if (Input.GetButton("Fire1"))
             {
-                if (!isSlash)
+                if (!isShovel)
                 {
-                    isSlash = true;
-                    Attack();
+                    isShovel = true;
+                    //Attack();
+                    Shovel();
                     currTime = Time.time;
                 }
-                if (isSlash && Time.time > currTime + slashDelay)
-                {
-                    isSlash = false;
-                }
+            }
+            if (isShovel && Time.time > currTime + shovelDelay)
+            {
+                //Debug.Log("isShovel false");
+                isShovel = false;
             }
             if (Input.GetKeyDown(KeyCode.E))
             { // next orb
@@ -118,7 +179,6 @@ namespace R
                 }
             }
         }
-
 
         void FixedUpdate()
         {
@@ -163,8 +223,15 @@ namespace R
                 // Make sure the player can't jump again until the jump conditions from Update are satisfied.
                 jump = false;
             }
+            if (isShovel)
+            {
+                ShovelAnimation();
+            }
+            else
+            {
+                ResetShovel();
+            }
         }
-
 
         void Flip()
         {
@@ -176,7 +243,6 @@ namespace R
             theScale.x *= -1;
             transform.localScale = theScale;
         }
-
 
         public IEnumerator Taunt()
         {
@@ -200,7 +266,6 @@ namespace R
             }
         }
 
-
         int TauntRandom()
         {
             // Choose a random index of the taunts array.
@@ -215,9 +280,44 @@ namespace R
                 return i;
         }
 
-        void Suck()
+        void Shovel()
         {
+            isShovel = true;
+            // call shovel handler
 
+        }
+
+        public void ApplyShovelCurve(GameObject toShovel)
+        {
+            // x = ((1-t)^3)*P0X + 3*((1-t)^2)*t*P1X + 3(1-t)*(t^2)*P2X + (t^3)*P3X
+            // float timeRatio = (Time.time - currTime) / shovelCurveTime
+            //Debug.Log("Shoveled");
+            //Debug.Log(facingRight ? 12f : -12f);
+            toShovel.GetComponent<Rigidbody2D>().AddForce(new Vector2(facingRight ? 12f : -12f, 25), ForceMode2D.Impulse);
+        }
+
+        void ShovelAnimation()
+        {
+            float addAngle = (Mathf.Sin((Time.time - currTime)*(2*Mathf.PI)/shovelDelay))*maxAngle; // sin from 0 to 1, time is x axis, 2pi (or full cicle) is delayTime
+            //Debug.Log("Add: " + addAngle);
+            //Debug.Log("Z: " + bucketTransform.localEulerAngles.z + " + " + addAngle + " | Total: " + (bucketTransform.localEulerAngles.z + addAngle));
+            //addAngle = facingRight ? addAngle : -addAngle;
+            shovelPivotTransform.localEulerAngles = new Vector3(
+                shovelPivotTransform.localEulerAngles.x,
+                shovelPivotTransform.localEulerAngles.y,
+                shovelPivotTransform.localEulerAngles.z + addAngle
+            );
+            //Debug.Log("Actual Z: " + bucketTransform.localEulerAngles.z);
+            
+        }
+
+        void ResetShovel()
+        {
+            shovelPivotTransform.localEulerAngles = new Vector3(
+                shovelPivotTransform.eulerAngles.x,
+                shovelPivotTransform.eulerAngles.y,
+                shovelAngle
+            );
         }
 
         void Attack()
@@ -249,6 +349,7 @@ namespace R
             newSlash.GetComponent<SlashHandler>().Color = (orbColors[0]);
             StartCoroutine(DestroyAfterSecs(newSlash, slashLife));
         }
+
         IEnumerator DestroyAfterSecs (GameObject toDestroy, float secs)
         {
             yield return new WaitForSeconds(secs);
@@ -312,8 +413,18 @@ namespace R
             }
             Debug.Log(orbColors[0]+" "+orbColors[1] + " " +orbColors[2]);
             orbUI.UpdateOrbs(this);
+            UpdateBucketColor(orbColors[0]);
         }
-        
+
+        public void UpdateBucketColor(ColorManager.eColors color)
+        {
+            bucketSR.color = ColorManager.GetColor(color);
+        } 
+
+        public bool GetIsShovel()
+        {
+            return isShovel;
+        }
     }
     
 }
