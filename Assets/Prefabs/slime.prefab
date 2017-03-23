@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114245385528112124}
   - component: {fileID: 61122368482478838}
   - component: {fileID: 50009512583875102}
+  - component: {fileID: 58232674683336222}
   m_Layer: 0
   m_Name: slime
   m_TagString: Enemy
@@ -63,13 +64,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!58 &58232674683336222
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1276268041640336}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.1875
 --- !u!61 &61122368482478838
 BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1276268041640336}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -95,7 +110,7 @@ MonoBehaviour:
   jumpForce:
     min: 1
     max: 2
-  minimumVerticleJumpForce: 5
+  minimumVerticleJumpForce: 10
   minimumHeight: -100
 --- !u!212 &212047540246671642
 SpriteRenderer:
@@ -126,7 +141,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1783731295
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d92bb162cc918164980c306a121a9f5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -114,7 +114,7 @@ namespace KRaB.Split.Enemy
                 ),
                 ForceMode2D.Impulse
             );
-            Debug.Log("Bounce");
+            //Debug.Log("Bounce");
             isBounce = true;
         }
 

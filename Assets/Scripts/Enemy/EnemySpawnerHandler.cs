@@ -16,12 +16,24 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private ColorManager.eColors colorType;
 
+        private bool isStart = false;
+        private float startTime = 0f;
+
         // Use this for initialization
         void Start() {
 
         }
 
         void FixedUpdate() {
+            if (!isStart)
+            {
+                startTime = Time.time;
+                
+            }
+        }
+
+        public void SpawnEnemy()
+        {
 
         }
     }
