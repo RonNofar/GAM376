@@ -97,6 +97,7 @@ MonoBehaviour:
     max: 2
   minimumVerticleJumpForce: 5
   minimumHeight: -100
+  mySpriteRenderer: {fileID: 212047540246671642}
 --- !u!212 &212047540246671642
 SpriteRenderer:
   m_ObjectHideFlags: 1
