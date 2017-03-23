@@ -1182,7 +1182,7 @@ MonoBehaviour:
   enemySpawnDelay:
     min: 0
     max: 0
-  enemyList: []
+  enemy: {fileID: 1276268041640336, guid: e7d873701fa6e3549bf8d78677d5ab37, type: 2}
   colorType: 0
 --- !u!4 &538003746
 Transform:
