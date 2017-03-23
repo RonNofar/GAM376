@@ -212,7 +212,7 @@ namespace KRaB.Split.Util
         public void AddToObjList(GameObject obj)
         {
             //if (!objs.Contains(obj)) objs.Add(obj);
-            if (obj.GetComponent<Enemy.enemyScript>().GetEnumColor() == color)
+            if (obj.GetComponent<Enemy.SlimeHandler>().GetEnumColor() == color)
             {
                 Destroy(obj);
             }

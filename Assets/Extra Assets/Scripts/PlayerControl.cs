@@ -330,7 +330,7 @@ namespace KRaB.Split.Player
 
         public void ApplyShovelCurve(GameObject toShovel)
         {
-            Enemy.enemyScript es = toShovel.GetComponent<Enemy.enemyScript>();
+            Enemy.SlimeHandler es = toShovel.GetComponent<Enemy.SlimeHandler>();
             es.SetCatcherTransform(ref bucketTransform);
             es.SetTotalTime(curveTime);
             es.SetCurveDampner(curveDampner);
