@@ -92,7 +92,10 @@ namespace KRaB.Split.Enemy
             {
                 Destroy(gameObject);
             }
+        }
 
+        private void FixedUpdate()
+        {
             if (isStart)
             {
                 ApplyShovelCurve(totalTime);
@@ -101,11 +104,7 @@ namespace KRaB.Split.Enemy
             {
                 isCurve = false;
             }
-        }
-
-        private void FixedUpdate()
-        {
-            if(!isBounce)
+            if (!isBounce)
             {
                 Bounce();
                 delayTime = Time.time + jumpDelay.RandomInRange;
