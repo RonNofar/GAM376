@@ -10,7 +10,9 @@ namespace KRaB.Split.Player
     {
         [Header("Player Variables")]
         [SerializeField]
-        private float playerHealth = 100f;
+        private float maxHealth = 100f;
+        [SerializeField]
+        private float currentHealth = 100f;
 
         [HideInInspector]
         public bool facingRight = true;         // For determining which way the player is currently facing.
@@ -380,18 +382,6 @@ namespace KRaB.Split.Player
             Destroy(toDestroy);
         }
 
-        public void DamagePlayer(float damage)
-        {
-            if (playerHealth-damage<0)
-            {
-                playerHealth = 0f;
-            } 
-            else
-            {
-                playerHealth -= damage;
-            }
-        }
-
         public ColorManager.eColors[] GetOrbArray()
         {
             return orbColors;
@@ -449,6 +439,33 @@ namespace KRaB.Split.Player
         public bool GetIsShovel()
         {
             return isShovel && isShovelCurve;
+        }
+
+        public float GetCurrentHealth()
+        {
+            return currentHealth;
+        }
+
+        public float GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
+        public float GetHealthPercentage()
+        {
+            return currentHealth/maxHealth;
+        }
+
+        public void DamagePlayer(float damage)
+        {
+            if (currentHealth - damage < 0)
+            {
+                currentHealth = 0f;
+            }
+            else
+            {
+                currentHealth -= damage;
+            }
         }
     }
     

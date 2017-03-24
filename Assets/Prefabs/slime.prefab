@@ -104,6 +104,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: 1
+  damage: 2
+  damageDelay:
+    min: 1
+    max: 2
   jumpDelay:
     min: 1
     max: 5
@@ -111,6 +115,8 @@ MonoBehaviour:
     min: 1
     max: 2
   minimumVerticleJumpForce: 10
+  xDampner: 2
+  yDampner: 1
   minimumHeight: -100
   mySpriteRenderer: {fileID: 212047540246671642}
 --- !u!212 &212047540246671642
@@ -145,6 +151,6 @@ SpriteRenderer:
   m_SortingLayerID: -1783731295
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d92bb162cc918164980c306a121a9f5f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -20,6 +20,15 @@ namespace KRaB.Split.Enemy
             }
         }
 
+        [Header("Damage")]
+        [SerializeField]
+        private float damage = 5f;
+        [SerializeField]
+        private Util.RTool.FloatRange damageDelay;
+
+        private bool isDamaged = false;
+        private float damageTime = 0f;
+
         [Header("Movement")]
         [SerializeField]
         private Util.RTool.FloatRange jumpDelay;
@@ -28,6 +37,10 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private float minimumVerticleJumpForce = 5f;
         [SerializeField]
+        private float xDampner = 1f;
+        [SerializeField]
+        private float yDampner = 1f;
+        [SerializeField]
         private float minimumHeight = -100f;
 
         private Transform myTransform;
@@ -35,6 +48,8 @@ namespace KRaB.Split.Enemy
         private SpriteRenderer mySpriteRenderer;
         private Rigidbody2D myRigidBody;
 
+        private GameObject playerObject;
+        private Player.PlayerControl player;
         private Transform playerTransform;
         private GameObject catcher; // catcher
         private Util.GrabController cController; // catcher controller
@@ -63,7 +78,9 @@ namespace KRaB.Split.Enemy
             mySpriteRenderer = GetComponent<SpriteRenderer>();
             myRigidBody = GetComponent<Rigidbody2D>();
 
-            playerTransform = GameObject.FindWithTag("Player").GetComponent<Transform>();
+            playerObject = GameObject.FindWithTag("Player");
+            playerTransform = playerObject.GetComponent<Transform>();
+            player = playerObject.GetComponent<Player.PlayerControl>();
             catcher = GameObject.FindWithTag("Bucket");
             cController = catcher.GetComponent<Util.GrabController>();
             cTransform = catcher.GetComponent<Transform>();
@@ -103,11 +120,33 @@ namespace KRaB.Split.Enemy
             
         }
 
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (!isCurve && Time.time > damageTime) {
+                if (collision.gameObject.GetComponent<Transform>().tag == "Player")
+                {
+                    player.DamagePlayer(damage);
+                    damageTime = Time.time + damageDelay.RandomInRange;
+                }
+            }
+        }
+        private void OnCollisionStay2D(Collision2D collision)
+        {
+            if (!isCurve && Time.time > damageTime)
+            {
+                if (collision.gameObject.GetComponent<Transform>().tag == "Player")
+                {
+                    player.DamagePlayer(damage);
+                    damageTime = Time.time + damageDelay.RandomInRange;
+                }
+            }
+        }
+
         private void Bounce()
         {
             myRigidBody.AddForce(new Vector2(
-                    (playerTransform.position.x - myTransform.position.x) * jumpForce.RandomInRange,
-                    (playerTransform.position.y - myTransform.position.y) * jumpForce.RandomInRange + minimumVerticleJumpForce
+                    (playerTransform.position.x - myTransform.position.x)/xDampner * jumpForce.RandomInRange,
+                    (playerTransform.position.y - myTransform.position.y)/yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
                 ),
                 ForceMode2D.Impulse
             );
