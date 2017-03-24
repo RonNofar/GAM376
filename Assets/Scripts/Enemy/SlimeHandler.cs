@@ -10,7 +10,15 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private UI.ColorManager.eColors color = UI.ColorManager.eColors.Black;
 
-        private UI.ColorManager.eColors prevColor = UI.ColorManager.eColors.Black;
+        public UI.ColorManager.eColors Color
+        {
+            get { return color; }
+            set
+            {
+                color = value;
+                mySpriteRenderer.color = UI.ColorManager.GetColor(color);
+            }
+        }
 
         [Header("Movement")]
         [SerializeField]
@@ -23,6 +31,7 @@ namespace KRaB.Split.Enemy
         private float minimumHeight = -100f;
 
         private Transform myTransform;
+        [SerializeField]
         private SpriteRenderer mySpriteRenderer;
         private Rigidbody2D myRigidBody;
 
@@ -45,7 +54,7 @@ namespace KRaB.Split.Enemy
         private void Awake()
         {
             SetInitialReferences();
-            ChangeColor(color);
+            Color = color;
         }
 
         private void SetInitialReferences()
@@ -62,12 +71,6 @@ namespace KRaB.Split.Enemy
 
         private void Update()
         {
-            if (color != prevColor)
-            {
-                prevColor = color;
-                ChangeColor(color);
-            }
-
             if (myTransform.position.y < minimumHeight)
             {
                 Destroy(gameObject);
@@ -98,12 +101,6 @@ namespace KRaB.Split.Enemy
                 }
             }
             
-        }
-
-        public void ChangeColor(UI.ColorManager.eColors c)
-        {
-            color = c;
-            mySpriteRenderer.color = UI.ColorManager.GetColor(color);
         }
 
         private void Bounce()
@@ -164,11 +161,5 @@ namespace KRaB.Split.Enemy
         {
             curveDampner = f;
         }
-
-        public UI.ColorManager.eColors GetEnumColor()
-        {
-            return color;
-        }
-
     }
 }
