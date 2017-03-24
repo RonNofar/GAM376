@@ -128,6 +128,10 @@ namespace KRaB.Split.Player
         private float reviveTimeRatio = 0f;
         private Vector3 spawnPosition;
 
+        [Header("Reject")]
+        public float xForce = 12f;
+        public float yForce = 25f;
+
         private ColorManager.eColors[] orbColors =
         { // 0 -> current, 1 -> next, last -> prev
             ColorManager.eColors.Blue,

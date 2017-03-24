@@ -46,7 +46,7 @@ namespace KRaB.Split.Enemy
         private Transform myTransform;
         [SerializeField]
         private SpriteRenderer mySpriteRenderer;
-        private Rigidbody2D myRigidBody;
+        private Rigidbody2D myRigidbody;
 
         private GameObject playerObject;
         private Player.PlayerControl player;
@@ -76,7 +76,7 @@ namespace KRaB.Split.Enemy
         {
             myTransform = GetComponent<Transform>();
             mySpriteRenderer = GetComponent<SpriteRenderer>();
-            myRigidBody = GetComponent<Rigidbody2D>();
+            myRigidbody = GetComponent<Rigidbody2D>();
 
             playerObject = GameObject.FindWithTag("Player");
             playerTransform = playerObject.GetComponent<Transform>();
@@ -144,7 +144,7 @@ namespace KRaB.Split.Enemy
 
         private void Bounce()
         {
-            myRigidBody.AddForce(new Vector2(
+            myRigidbody.AddForce(new Vector2(
                     (playerTransform.position.x - myTransform.position.x)/xDampner * jumpForce.RandomInRange,
                     (playerTransform.position.y - myTransform.position.y)/yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
                 ),
@@ -179,6 +179,11 @@ namespace KRaB.Split.Enemy
                 isStart = false;
                 cController.AddToObjList(gameObject);
             }
+        }
+
+        public void ApplyRejectForce()
+        {
+            myRigidbody.AddForce(new Vector2(player.facingRight ? -player.xForce : player.xForce, player.yForce), ForceMode2D.Impulse);
         }
 
         public void SetCatcherTransform(ref Transform t)

@@ -215,6 +215,9 @@ namespace KRaB.Split.Util
             if (obj.GetComponent<Enemy.SlimeHandler>().Color == color)
             {
                 Destroy(obj);
+            } else
+            {
+                obj.GetComponent<Enemy.SlimeHandler>().ApplyRejectForce();
             }
         }
         /*
