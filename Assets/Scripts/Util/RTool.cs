@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace KRaB.Split.Util
 {
@@ -20,6 +21,12 @@ namespace KRaB.Split.Util
                     return Random.Range(min, max);
                 }
             }
+        }
+
+        public static IEnumerator WaitAndRunAction(float secs, UnityAction action)
+        { // wait for secs  
+            yield return new WaitForSeconds(secs);
+            action.Invoke();
         }
     }
 

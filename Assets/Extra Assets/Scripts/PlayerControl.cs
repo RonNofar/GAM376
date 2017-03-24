@@ -13,6 +13,10 @@ namespace KRaB.Split.Player
         private float maxHealth = 100f;
         [SerializeField]
         private float currentHealth = 100f;
+        [SerializeField]
+        private float minimumHeight = -100f;
+        [HideInInspector]
+        public bool isDead = false;
 
         [HideInInspector]
         public bool facingRight = true;         // For determining which way the player is currently facing.
@@ -35,7 +39,7 @@ namespace KRaB.Split.Player
         private Animator anim;                  // Reference to the player's animator component.
 
         private Transform myTransform;
-        private Rigidbody myRigidbody;
+        private Rigidbody2D myRigidbody;
         private Vector3 myPosition;
 
         [Header("Color Variables")]
@@ -58,7 +62,7 @@ namespace KRaB.Split.Player
         [SerializeField]
         private float shovelDelay = 0.5f;
         [SerializeField]
-        private float maxAngle = 90f;
+        private float halfFlapAngle = 20f;
 
         private Transform shovelPivotTransform;
         private float shovelAngle;
@@ -66,7 +70,7 @@ namespace KRaB.Split.Player
 
         [Header("Shovel Curve Variables")]
         [SerializeField]
-        private float curveTime = 5f;
+        private float curveTime = 1f;
         [SerializeField]
         private float curveDampner = 4f; // 4 is recommended (maybe 3)
 
@@ -95,6 +99,35 @@ namespace KRaB.Split.Player
         private bool isSlash = false;
         private float currTime = 0f;
 
+        [Header("Revive")]
+        [SerializeField]
+        private float reviveDelay = 3f;
+        [SerializeField]
+        private float reviveLength = 3f;
+        [Tooltip("Make sure that reviveDampner is greater than 1")]
+        [SerializeField]
+        private float reviveDampner = 4f;
+        [SerializeField]
+        private float maximumUpwardForce = 10f;
+        [SerializeField]
+        private GameObject rightWing;
+        [SerializeField]
+        private GameObject leftWing;
+        [SerializeField]
+        private GameObject halo;
+        [SerializeField]
+        private float wingFlaps = 5f;
+        [SerializeField]
+        private float wingMaxAngle = 27.5f;
+
+        private Transform rightWingTransform;
+        private Transform leftWingTransform;
+        private bool isRevive = false;
+        private bool isReviveSequence = false;
+        private float reviveStartTime = 0f;
+        private float reviveTimeRatio = 0f;
+        private Vector3 spawnPosition;
+
         private ColorManager.eColors[] orbColors =
         { // 0 -> current, 1 -> next, last -> prev
             ColorManager.eColors.Blue,
@@ -105,6 +138,14 @@ namespace KRaB.Split.Player
         void Awake()
         {
             // Setting up references.
+            
+            SetInitialReferences();
+            UpdateBucketColor(orbColors[0]);
+        }
+
+        #region Initializers
+        void SetInitialReferences()
+        {
             groundCheck = transform.Find("groundCheck");
             anim = GetComponent<Animator>();
             try
@@ -113,13 +154,12 @@ namespace KRaB.Split.Player
             } catch {
                 Debug.Log("Error: unable to get Transform as component");
             }
-            SetInitialReferences();
-            UpdateBucketColor(orbColors[0]);
-        }
-
-        #region Initializers
-        void SetInitialReferences()
-        {
+            try
+            {
+                myRigidbody = GetComponent<Rigidbody2D>();
+            } catch {
+                Debug.Log("Error: unable to get Rigidbody2D as component");
+            }
             if (shovelPivot != null)
             {
                 try
@@ -153,6 +193,28 @@ namespace KRaB.Split.Player
             {
                 Debug.Log("Error: reference to bucket object is null");
             }
+            if (rightWing != null)
+            {
+                try
+                {
+                    rightWingTransform = rightWing.GetComponent<Transform>();
+                    rightWing.SetActive(false);
+                } catch {
+                    Debug.Log("Error: unable to get rightWingTransform as component");
+                }
+            }
+            if (leftWing != null)
+            {
+                try
+                {
+                    leftWingTransform = leftWing.GetComponent<Transform>();
+                    leftWing.SetActive(false); 
+                } catch {
+                    Debug.Log("Error: unable to get leftWingTransform as component");
+                }
+            }
+            halo.SetActive(false);
+            spawnPosition = myTransform.position;
         }
         #endregion
 
@@ -195,6 +257,11 @@ namespace KRaB.Split.Player
                     RotateOrbColors(-1);
                 }
             }
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                isRevive = true;
+            }
+            CheckForDeath();
         }
 
         void FixedUpdate()
@@ -248,6 +315,15 @@ namespace KRaB.Split.Player
             {
                 ResetShovel();
             }
+            if (isRevive)
+            {
+                Revive();
+            }
+        }
+
+        void CheckForDeath()
+        { // to be called in update
+            if (myTransform.position.y <= minimumHeight) Death();
         }
 
         void Flip()
@@ -297,6 +373,82 @@ namespace KRaB.Split.Player
                 return i;
         }
 
+        public void Death()
+        { // is called in method called in update
+            if (!isDead)
+            {
+                currentHealth = 0f;
+                isDead = true;
+                // death animation here
+                StartCoroutine(
+                    RTool.WaitAndRunAction(
+                        reviveDelay,
+                        () => { isRevive = true; }
+                    )
+                );
+            }
+        }
+
+        public void Revive()
+        {
+            if (!isReviveSequence) {
+                isDead = false;
+                myTransform.position = spawnPosition;
+                ZeroVelocity();
+                reviveStartTime = Time.time;
+                isReviveSequence = true;
+
+                currentHealth = maxHealth;
+
+                GetComponent<BoxCollider2D>().enabled = false;
+                GetComponent<CircleCollider2D>().enabled = false;
+
+                leftWing.SetActive(true);
+                rightWing.SetActive(true);
+                halo.SetActive(true);
+            }
+            else
+            {
+                reviveTimeRatio = (Time.time - reviveStartTime) / reviveLength;
+                ZeroVelocity();
+                myTransform.Translate(
+                    new Vector2(
+                        0f,
+                        Mathf.Pow(
+                            1 / reviveDampner,
+                            reviveTimeRatio) * maximumUpwardForce// + -(Physics2D.gravity.y))
+                        )
+                    );
+                leftWingTransform.localEulerAngles = new Vector3(
+                    leftWingTransform.localEulerAngles.x,
+                    leftWingTransform.localEulerAngles.y,
+                    leftWingTransform.localEulerAngles.z + Mathf.Sin((wingFlaps) * 2 * Mathf.PI * reviveTimeRatio) * halfFlapAngle
+                );
+                rightWingTransform.localEulerAngles = new Vector3(
+                    rightWingTransform.localEulerAngles.x,
+                    rightWingTransform.localEulerAngles.y,
+                    rightWingTransform.localEulerAngles.z + -(Mathf.Sin((wingFlaps) * 2 * Mathf.PI * reviveTimeRatio) * halfFlapAngle)
+                );
+                if (reviveTimeRatio >= 1)
+                {
+                    isRevive = false;
+                    isReviveSequence = false;
+
+                    GetComponent<BoxCollider2D>().enabled = true;
+                    GetComponent<CircleCollider2D>().enabled = true;
+
+                    leftWing.SetActive(false);
+                    rightWing.SetActive(false);
+                    halo.SetActive(false);
+                }
+            }
+        }
+
+        public void ZeroVelocity()
+        {
+            myRigidbody.velocity = new Vector2(0f, 0f);
+        }
+
         void Shovel()
         {
             isShovel = true;
@@ -307,7 +459,7 @@ namespace KRaB.Split.Player
 
         void ShovelAnimation()
         {
-            float addAngle = (Mathf.Sin((Time.time - currTime)*(2*Mathf.PI)/shovelDelay))*maxAngle; // sin from 0 to 1, time is x axis, 2pi (or full cicle) is delayTime
+            float addAngle = (Mathf.Sin((Time.time - currTime)*(2*Mathf.PI)/shovelDelay))*halfFlapAngle; // sin from 0 to 1, time is x axis, 2pi (or full cicle) is delayTime
             //Debug.Log("Add: " + addAngle);
             //Debug.Log("Z: " + bucketTransform.localEulerAngles.z + " + " + addAngle + " | Total: " + (bucketTransform.localEulerAngles.z + addAngle));
             //addAngle = facingRight ? addAngle : -addAngle;
@@ -461,6 +613,7 @@ namespace KRaB.Split.Player
             if (currentHealth - damage < 0)
             {
                 currentHealth = 0f;
+                Death();
             }
             else
             {

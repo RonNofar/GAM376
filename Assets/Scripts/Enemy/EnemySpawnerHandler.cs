@@ -46,7 +46,7 @@ namespace KRaB.Split.Enemy
             while (spawning)
             {
                 Debug.Log("Spawn Continues");
-                enemy.GetComponent<SlimeHandler>().Color = (UI.ColorManager.eColors)Random.Range(1, 1);
+                enemy.GetComponent<SlimeHandler>().Color = (UI.ColorManager.eColors)Random.Range(1, 2);
                 GameObject temp = Instantiate(enemy);
                 temp.transform.position = transform.position;
                 yield return new WaitForSeconds(1);
