@@ -136,7 +136,7 @@ namespace KRaB.Split.Player
         { // 0 -> current, 1 -> next, last -> prev
             ColorManager.eColors.Blue,
             ColorManager.eColors.Red,
-            ColorManager.eColors.Black
+            ColorManager.eColors.Yellow
         };
 
         void Awake()

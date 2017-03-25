@@ -51,7 +51,7 @@ namespace KRaB.Split.Enemy
                 enemy.GetComponent<SlimeHandler>().Color = (UI.ColorManager.eColors)Random.Range(colorRange.min, colorRange.max+1);
                 GameObject temp = Instantiate(enemy);
                 temp.transform.position = transform.position;
-                yield return new WaitForSeconds(1);
+                yield return new WaitForSeconds(enemySpawnDelay.RandomInRange);
 
             }
         }
