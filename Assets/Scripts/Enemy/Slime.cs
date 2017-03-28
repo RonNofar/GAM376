@@ -21,7 +21,7 @@ namespace KRaB.Split.Enemy
 
         [Header("Damage")]
         [SerializeField]
-        private float damage = 5f;
+        private float damage = 2f;
         [SerializeField]
         private Util.RTool.FloatRange damageDelay;
         private float damageTime = 0f;
@@ -32,9 +32,9 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private Util.RTool.FloatRange jumpForce;
         [SerializeField]
-        private float minimumVerticleJumpForce = 5f;
+        private float minimumVerticleJumpForce = 10f;
         [SerializeField]
-        private float xDampner = 1f;
+        private float xDampner = 2f;
         [SerializeField]
         private float yDampner = 1f;
 
@@ -56,7 +56,7 @@ namespace KRaB.Split.Enemy
         protected override void Update()
         {
             base.Update();
-            Debug.Log("Slime");
+            //Debug.Log("Slime");
 
             if (!isBounce)
             {

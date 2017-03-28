@@ -383,11 +383,8 @@ namespace KRaB.Split.Player
 
         public void ApplyShovelCurve(GameObject toShovel)
         {
-            Enemy.SlimeHandler es = toShovel.GetComponent<Enemy.SlimeHandler>();
-            es.SetCatcherTransform(ref bucketTransform);
-            es.SetTotalTime(curveTime);
-            es.SetCurveDampner(curveDampner);
-            es.SetIsStart(true);
+            Enemy.Slime es = toShovel.GetComponent<Enemy.Slime>();
+            es.launch(ref bucketTransform, curveTime, curveDampner);
             //toShovelTransform = toShovel.GetComponent<Transform>();
 
             // x = ((1-t)^3)*P0X + 3*((1-t)^2)*t*P1X + 3(1-t)*(t^2)*P2X + (t^3)*P3X
@@ -476,7 +473,7 @@ namespace KRaB.Split.Player
             {
                 Debug.Log("Error: the method RotateOrbsColor received an unknown direction");
             }
-            Debug.Log(orbColors[0] + " " + orbColors[1] + " " + orbColors[2]);
+            //Debug.Log(orbColors[0] + " " + orbColors[1] + " " + orbColors[2]);
             orbUI.UpdateOrbs(this);
             UpdateBucketColor(orbColors[0]);
         }

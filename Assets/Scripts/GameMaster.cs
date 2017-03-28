@@ -40,7 +40,7 @@ namespace KRaB.Split.Manager
                 for (int i = 0; i < numberOfSpawns; ++i)
                 {
                     GameObject o = Instantiate(toSpawn);
-                    o.GetComponent<Enemy.SlimeHandler>().Color =
+                    o.GetComponent<Enemy.Slime>().Color =
                             (Random.Range(0f, 1f) > 0.5f) ? UI.ColorManager.eColors.Blue : UI.ColorManager.eColors.Red;
                 }
             }
