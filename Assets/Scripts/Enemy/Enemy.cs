@@ -6,6 +6,19 @@ namespace KRaB.Split.Enemy
 {
     public abstract class Enemy : Entity
     {
+
+        [Header("Runtime Linking", order = 101)]
+        [SerializeField]
+        protected AIMaster parent;
+        public AIMaster Parent
+        {
+            set
+            {
+                if (parent == null)
+                    parent = value;
+            }
+        }
+
         protected Player.PlayerControl player;
         protected Transform playerTransform;
 
@@ -45,14 +58,14 @@ namespace KRaB.Split.Enemy
         public void launch(ref Transform destination, float totalTime, float curveDamp)
         {
             cTransform = destination;
-            StartCoroutine(ApplyShovelCurve(totalTime,curveDamp));
+            StartCoroutine(ApplyShovelCurve(totalTime, curveDamp));
         }
 
-        private IEnumerator ApplyShovelCurve(float totalTime,float curveDamp)
+        private IEnumerator ApplyShovelCurve(float totalTime, float curveDamp)
         {
             Vector3 originalPosition = transform.position;
             Vector3 distance = new Vector3(
-                0f, 
+                0f,
                 (Vector3.Distance(originalPosition, cTransform.position)) / curveDamp,
                 0f);
 

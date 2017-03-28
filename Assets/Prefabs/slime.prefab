@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumHeight: -100
+  parent: {fileID: 0}
   color: 1
   damage: 2
   damageDelay:

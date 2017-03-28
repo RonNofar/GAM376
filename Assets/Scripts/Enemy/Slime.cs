@@ -99,8 +99,8 @@ namespace KRaB.Split.Enemy
             if (tossed)
                 return;
             myRigidbody.AddForce(new Vector2(
-                    (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange,
-                    (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
+                    parent.JumpHeight.clamp((playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
+                    parent.JumpWidth.clamp((playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
                 ),
                 ForceMode2D.Impulse
             );
