@@ -50,6 +50,7 @@ namespace KRaB.Split.Enemy
 
         private IEnumerator ApplyShovelCurve(float totalTime,float curveDamp)
         {
+            GetComponent<Collider2D>().enabled = false;
             Vector3 originalPosition = transform.position;
             Vector3 distance = new Vector3(
                 0f, 
@@ -74,6 +75,8 @@ namespace KRaB.Split.Enemy
                 yield return new WaitForFixedUpdate();
             }
             cController.AddToObjList(gameObject);
+            GetComponent<Collider2D>().enabled = true;
+            tossed = false;
         }
     }
 }

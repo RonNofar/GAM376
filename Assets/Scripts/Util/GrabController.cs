@@ -212,14 +212,19 @@ namespace KRaB.Split.Util
         public void AddToObjList(GameObject obj)
         {
             //if (!objs.Contains(obj)) objs.Add(obj);
-            if (obj.GetComponent<Enemy.Slime>().Color == color)
+            Enemy.Slime s = obj.GetComponent<Enemy.Slime>();
+            if (s.Color == color)
             {
                 Destroy(obj);
-            } else
-            {
-                obj.GetComponent<Enemy.Slime>().ApplyRejectForce();
+                return;
             }
+            else if (((int)s.Color & (int)color) != 0)
+            {
+                s.Color ^= color;
+            }
+            obj.GetComponent<Enemy.Slime>().ApplyRejectForce();
         }
+
         /*
         private IEnumerator AnalyseObject()
         {
