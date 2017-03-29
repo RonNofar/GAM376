@@ -5012,7 +5012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96dc828d32896e841acb0066678c82b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toSpawn: {fileID: 1276268041640336, guid: e7d873701fa6e3549bf8d78677d5ab37, type: 2}
+  toSpawn: {fileID: 1276268041640336, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
   numberOfSpawns: 20
   versionString: v0.0.2
   versionText: {fileID: 717223696}
@@ -31563,6 +31563,10 @@ Prefab:
     - target: {fileID: 4045830370693586, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1276268041640336, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
