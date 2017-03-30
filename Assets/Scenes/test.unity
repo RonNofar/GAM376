@@ -4651,7 +4651,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4045830370693586, guid: e7d873701fa6e3549bf8d78677d5ab37, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 114245385528112124, guid: e7d873701fa6e3549bf8d78677d5ab37,
         type: 2}
@@ -5014,7 +5014,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toSpawn: {fileID: 1276268041640336, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
   numberOfSpawns: 20
-  versionString: v0.0.2
+  versionString: v0.0.3
   versionText: {fileID: 717223696}
   winCollider: {fileID: 1025286925}
   winText: {fileID: 745630364}
@@ -9106,7 +9106,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &538003744
 GameObject:
@@ -9142,7 +9142,8 @@ MonoBehaviour:
   colorType: 1
   colorRange:
     min: 0
-    max: 2
+    max: 3
+  isOneColor: 0
 --- !u!4 &538003746
 Transform:
   m_ObjectHideFlags: 0
@@ -9321,7 +9322,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4041617999162030, guid: ca42846f30c5dfd4b89b06d1cd9c6439, type: 2}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 114098880425667604, guid: ca42846f30c5dfd4b89b06d1cd9c6439,
         type: 2}
@@ -24137,7 +24138,7 @@ Transform:
   m_Children:
   - {fileID: 2020473028}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1367711246
 GameObject:
@@ -31023,10 +31024,11 @@ MonoBehaviour:
     min: 6
     max: 9
   enemy: {fileID: 1276268041640336, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
-  colorType: 1
+  colorType: 3
   colorRange:
     min: 0
     max: 3
+  isOneColor: 1
 --- !u!4 &1806694646
 Transform:
   m_ObjectHideFlags: 0

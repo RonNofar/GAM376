@@ -14,6 +14,8 @@ public class Lift : Triggerable
     protected GameObject Bottom;
     [SerializeField]
     protected GameObject Platform;
+    [SerializeField]
+    protected LiftCollider Collider;
 
     protected Vector3 destination { get { return (movingUp ? Top : Bottom).transform.position; } }
     protected Vector3 travelDirection { get { return (destination- Platform.transform.position).normalized; } }
@@ -37,13 +39,20 @@ public class Lift : Triggerable
         float distance = speed * Time.deltaTime;
         if (distance * distance > (destination - Platform.transform.position).sqrMagnitude)
         {
-            Platform.transform.position = destination;
+            Move(destination - Platform.transform.position);
             movingUp = !movingUp;
         }
         else
         {
-            Platform.transform.position += speed * Time.deltaTime * travelDirection;
+            Move( speed * Time.deltaTime * travelDirection);
         }
 
     }
+    private void Move(Vector3 move)
+    {
+        Platform.transform.position += move;
+        foreach (GameObject go in Collider.occupants)
+            go.transform.position += move;
+    }
+
 }
