@@ -12,11 +12,21 @@ namespace KRaB.Split.Enemy
         protected AIMaster parent;
         public AIMaster Parent
         {
+            get { return parent; }
             set
             {
                 if (parent == null)
+                {
                     parent = value;
+                    parent.register(this);
+                }
             }
+        }
+
+        public SlimeZone Zone
+        {
+            get;
+            set;
         }
 
         protected Player.PlayerControl player;
@@ -26,6 +36,12 @@ namespace KRaB.Split.Enemy
         private Transform cTransform; // catcher Transform
 
         protected bool tossed { get; private set; }
+
+        protected virtual void OnDestroy()
+        {
+            parent.deregister(this);
+        }
+
 
         // Use this for initialization
         protected override void Start()

@@ -65,11 +65,14 @@ namespace KRaB.Split.Enemy
             Debug.Log("Spawn start");
             while (spawning && parent == this.parent)
             {
-                Debug.Log("Spawn Continues");
-                enemy.GetComponent<Slime>().Color = (UI.ColorManager.eColors)(1<<(Random.Range((int)colorRange.min, (int)colorRange.max)));
-                GameObject temp = Instantiate(enemy);
-                temp.GetComponent<Slime>().Parent = parent;
-                temp.transform.position = transform.position;
+                if (parent.spawn)
+                {
+                    Debug.Log("Spawn Continues");
+                    enemy.GetComponent<Slime>().Color = (UI.ColorManager.eColors)(1 << (Random.Range((int)colorRange.min, (int)colorRange.max)));
+                    GameObject temp = Instantiate(enemy);
+                    temp.GetComponent<Slime>().Parent = parent;
+                    temp.transform.position = transform.position;
+                }
                 yield return new WaitForSeconds(enemySpawnDelay.RandomInRange);
 
             }

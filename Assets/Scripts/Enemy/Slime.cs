@@ -5,7 +5,7 @@ using KRaB.Split.UI;
 
 namespace KRaB.Split.Enemy
 {
-    public class Slime : Enemy , ColoredObject
+    public class Slime : Enemy, ColoredObject
     {
         [SerializeField]
         private ColorManager.eColors color;
@@ -94,16 +94,20 @@ namespace KRaB.Split.Enemy
 
         }
 
+
         private void Bounce()
         {
             if (tossed)
                 return;
-            myRigidbody.AddForce(new Vector2(
-                    parent.JumpHeight.clamp((playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
-                    parent.JumpWidth.clamp((playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
-                ),
-                ForceMode2D.Impulse
-            );
+            if (Zone)
+                myRigidbody.AddForce(Zone.movement,ForceMode2D.Impulse);
+            else
+                myRigidbody.AddForce(new Vector2(
+                        parent.JumpHeight.clamp((playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
+                        parent.JumpWidth.clamp((playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
+                    ),
+                    ForceMode2D.Impulse
+                );
             //Debug.Log("Bounce");
             isBounce = true;
         }

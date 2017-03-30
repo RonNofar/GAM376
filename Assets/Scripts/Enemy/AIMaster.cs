@@ -13,6 +13,13 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private GameObject SpawnerPrefab;
 
+        private List<Enemy> active = new List<Enemy>();
+
+        [SerializeField]
+        private int maxSpawns;
+
+        public bool spawn { get { return maxSpawns > (active.Count); } }
+
 
         // Use this for initialization
         void Start()
@@ -24,12 +31,22 @@ namespace KRaB.Split.Enemy
             }
             Transform[] child = GetComponentsInChildren<Transform>();
             Debug.Log(child.Length);
+            
         }
 
         // Update is called once per frame
         void Update()
         {
 
+        }
+
+        public void register(Enemy s)
+        {
+            active.Add(s);
+        }
+        public void deregister(Enemy s)
+        {
+            active.Remove(s);
         }
     }
 }
