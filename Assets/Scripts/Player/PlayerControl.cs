@@ -235,7 +235,7 @@ namespace KRaB.Split.Player
                     RotateOrbColors(1);
                 }
             }
-            Debug.Log(Input.GetAxis("ShiftLeft"));
+            //Debug.Log(Input.GetAxis("ShiftLeft"));
             if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Joystick1Button4))
             { // previous orb (<<)
                 if (orbColors[orbColors.Length - 1] != ColorManager.eColors.Black)
