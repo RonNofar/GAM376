@@ -213,7 +213,7 @@ namespace KRaB.Split.Player
         {
             base.Update();
             //if (Input.GetButton("Fire2")) Suck();
-            if (Input.GetButton("Fire1"))
+            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.Joystick1Button2))//Input.GetButton("Fire1"))
             {
                 if (!isShovel)
                 {
@@ -228,21 +228,22 @@ namespace KRaB.Split.Player
                 //Debug.Log("isShovel false");
                 isShovel = false;
             }
-            if (Input.GetKeyDown(KeyCode.E))
-            { // next orb
+            if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button5))
+            { // next orb (>>)
                 if (orbColors[1] != ColorManager.eColors.Black)
                 {
                     RotateOrbColors(1);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Q))
-            { // previous orb
+            //Debug.Log(Input.GetAxis("ShiftLeft"));
+            if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Joystick1Button4))
+            { // previous orb (<<)
                 if (orbColors[orbColors.Length - 1] != ColorManager.eColors.Black)
                 {
                     RotateOrbColors(-1);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.R))
+            if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown(KeyCode.Joystick1Button6))
             {
                 isRevive = true;
             }
