@@ -6,6 +6,29 @@ namespace KRaB.Split.Enemy
 {
     public abstract class Enemy : Entity
     {
+
+        [Header("Runtime Linking", order = 101)]
+        [SerializeField]
+        protected AIMaster parent;
+        public AIMaster Parent
+        {
+            get { return parent; }
+            set
+            {
+                if (parent == null)
+                {
+                    parent = value;
+                    parent.register(this);
+                }
+            }
+        }
+
+        public SlimeZone Zone
+        {
+            get;
+            set;
+        }
+
         protected Player.PlayerControl player;
         protected Transform playerTransform;
 
@@ -13,6 +36,12 @@ namespace KRaB.Split.Enemy
         private Transform cTransform; // catcher Transform
 
         protected bool tossed { get; private set; }
+
+        protected virtual void OnDestroy()
+        {
+            parent.deregister(this);
+        }
+
 
         // Use this for initialization
         protected override void Start()
@@ -45,15 +74,15 @@ namespace KRaB.Split.Enemy
         public void launch(ref Transform destination, float totalTime, float curveDamp)
         {
             cTransform = destination;
-            StartCoroutine(ApplyShovelCurve(totalTime,curveDamp));
+            StartCoroutine(ApplyShovelCurve(totalTime, curveDamp));
         }
 
-        private IEnumerator ApplyShovelCurve(float totalTime,float curveDamp)
+        private IEnumerator ApplyShovelCurve(float totalTime, float curveDamp)
         {
             GetComponent<Collider2D>().enabled = false;
             Vector3 originalPosition = transform.position;
             Vector3 distance = new Vector3(
-                0f, 
+                0f,
                 (Vector3.Distance(originalPosition, cTransform.position)) / curveDamp,
                 0f);
 

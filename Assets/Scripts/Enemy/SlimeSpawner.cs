@@ -19,6 +19,20 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private RTool.FloatRange colorRange;
 
+        [Header("Runtime Linking", order = 101)]
+        [SerializeField]
+        private AIMaster parent;
+
+        public AIMaster Parent
+        {
+            set
+            {
+                if (parent == null)
+                    parent = value;
+                StartCoroutine(spawnEnemies(value));
+            }
+        }
+
         private bool isStart = false;
         private float startTime = 0f;
 
@@ -29,7 +43,8 @@ namespace KRaB.Split.Enemy
         {
             Time.timeScale = 1;
             spawning = true;
-            StartCoroutine(spawnEnemies());
+            if (parent)
+                StartCoroutine(spawnEnemies(parent));
         }
 
         void FixedUpdate()
@@ -45,15 +60,19 @@ namespace KRaB.Split.Enemy
         {
 
         }
-        private IEnumerator spawnEnemies()
+        private IEnumerator spawnEnemies(AIMaster parent)
         {
             Debug.Log("Spawn start");
-            while (spawning)
+            while (spawning && parent == this.parent)
             {
-                Debug.Log("Spawn Continues");
-                enemy.GetComponent<Slime>().Color = (UI.ColorManager.eColors)Random.Range(colorRange.min, colorRange.max + 1);
-                GameObject temp = Instantiate(enemy);
-                temp.transform.position = transform.position;
+                if (parent.spawn)
+                {
+                    Debug.Log("Spawn Continues");
+                    enemy.GetComponent<Slime>().Color = (UI.ColorManager.eColors)(1 << (Random.Range((int)colorRange.min, (int)colorRange.max)));
+                    GameObject temp = Instantiate(enemy);
+                    temp.GetComponent<Slime>().Parent = parent;
+                    temp.transform.position = transform.position;
+                }
                 yield return new WaitForSeconds(enemySpawnDelay.RandomInRange);
 
             }

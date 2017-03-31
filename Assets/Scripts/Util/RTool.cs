@@ -21,6 +21,10 @@ namespace KRaB.Split.Util
                     return Random.Range(min, max);
                 }
             }
+            public float clamp(float num)
+            {
+                return num < max ? num > min ? num : min : max;
+            }
         }
 
         public static IEnumerator WaitAndRunAction(float secs, UnityAction action)
@@ -29,6 +33,26 @@ namespace KRaB.Split.Util
             action.Invoke();
         }
     }
+    [System.Serializable]
+    public struct FloatRange
+    {
+        public float min, max;
+
+        public float RandomInRange
+        {
+            get
+            {
+                return Random.Range(min, max);
+            }
+        }
+        public float clamp(float num)
+        {
+            bool neg = num < 0;
+            num *= (neg ? -1 : 1);
+            return (num < max ? num > min ? num : min : max)*(neg?-1:1);
+        }
+    }
+
 
 }
 
