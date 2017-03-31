@@ -9,7 +9,7 @@ namespace KRaB.Split.Manager
     public class GameMaster : MonoBehaviour {
 
         static public GameMaster Instance { get { return _instance; } }
-        static public GameMaster _instance;
+        static private GameMaster _instance;
 
         public GameObject toSpawn;
         public int numberOfSpawns;
@@ -60,17 +60,20 @@ namespace KRaB.Split.Manager
             set { currentState = value; }
         }
 
+        public float timeCreated = Time.realtimeSinceStartup;
+
         private void Awake()
         {
-            DontDestroyOnLoad(this);
+            timeCreated = Time.realtimeSinceStartup;
             Debug.Log("OnAwake: " + lastState + " | Time: "+Time.realtimeSinceStartup);
-            if (_instance != null)
+            if (_instance != null && _instance != this)
             {
                 Debug.LogWarning("Game Master is already in play, deleting new.");
-                Destroy(this);
+                //Destroy(this.gameObject);
             }
             else
             { _instance = this; }
+            //DontDestroyOnLoad(this.gameObject);
         }
 
         // Use this for initialization
@@ -87,7 +90,7 @@ namespace KRaB.Split.Manager
 
         // Update is called once per frame
         void Update() {
-            if (Input.GetKeyDown(KeyCode.Q))
+            if (Input.GetKeyDown(KeyCode.Equals))
             {
                 for (int i = 0; i < numberOfSpawns; ++i)
                 {
@@ -116,7 +119,7 @@ namespace KRaB.Split.Manager
             // Handle Change in GameState here
             if (lastState != currentState)
             {
-                Debug.Log("state change: " + currentState);
+                Debug.Log("state change: " + currentState + " | Time: " + Time.realtimeSinceStartup);
                 lastState = currentState;
                 switch (currentState)
                 {

@@ -5270,6 +5270,8 @@ MonoBehaviour:
   versionText: {fileID: 717223696}
   winCollider: {fileID: 1025286925}
   winText: {fileID: 745630364}
+  savedState: 0
+  timeCreated: 0.012519223
 --- !u!4 &288113719
 Transform:
   m_ObjectHideFlags: 0
@@ -6658,7 +6660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &378624803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6763,7 +6765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &378888891
 Transform:
   m_ObjectHideFlags: 0
@@ -10218,7 +10220,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &561962551
 Transform:
   m_ObjectHideFlags: 0
@@ -13965,7 +13967,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &745630363
 RectTransform:
   m_ObjectHideFlags: 0
@@ -31262,7 +31264,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1728855811
 Transform:
   m_ObjectHideFlags: 0

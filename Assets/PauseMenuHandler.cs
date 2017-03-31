@@ -45,9 +45,9 @@ namespace KRaB.Split.UI
         }
         private void RestartButton()
         {
-            Manager.GameMaster.ReloadScene();
-            Manager.GameMaster.Instance.savedState = 
+            /*Manager.GameMaster.Instance.savedState =
                 Manager.GameMaster.GameState.InGame;
+            Manager.GameMaster.ReloadScene();*/
         }
         private void MainMenuButton()
         {
