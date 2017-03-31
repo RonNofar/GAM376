@@ -27,6 +27,18 @@ namespace KRaB.Split.Manager
 
         private string prevVersionString = " "; // used for switching UI if changed in inspector
 
+        private bool isPaused = false;
+        public bool pause
+        {
+            get { return isPaused; }
+            set
+            {
+                isPaused = value;
+                if (value == true) Pause();
+                else if (value == false) UnPause();
+            }
+        }
+
         // Use this for initialization
         void Start() {
             winText.enabled = false;
@@ -60,6 +72,16 @@ namespace KRaB.Split.Manager
         {
             winText.enabled = true;
             StartCoroutine(Util.RTool.WaitAndRunAction(3f, () => ReloadScene()));
+        }
+
+        public void Pause()
+        {
+            Time.timeScale = 0.0f;
+        }
+
+        public void UnPause()
+        {
+            Time.timeScale = 1.0f;
         }
     }
 }
