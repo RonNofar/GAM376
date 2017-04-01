@@ -37,19 +37,22 @@ namespace KRaB.Split.Enemy
         private float xDampner = 2f;
         [SerializeField]
         private float yDampner = 1f;
+        [SerializeField]
+        private float maxDistance = 10f;
 
         [SerializeField]
         private SpriteRenderer mySpriteRenderer;
 
         private float delayTime = 0f;
         private bool isBounce = false;
+        private AudioSource audio;
 
         // Use this for initialization
         protected override void Start()
         {
             base.Start();
             Color = color;
-
+            audio = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -100,14 +103,22 @@ namespace KRaB.Split.Enemy
             if (tossed)
                 return;
             if (Zone)
-                myRigidbody.AddForce(Zone.movement,ForceMode2D.Impulse);
+                myRigidbody.AddForce(Zone.movement, ForceMode2D.Impulse);
             else
-                myRigidbody.AddForce(new Vector2(
-                        parent.JumpHeight.clamp((playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
-                        parent.JumpWidth.clamp((playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
-                    ),
-                    ForceMode2D.Impulse
-                );
+            {
+                if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < maxDistance)
+                {
+                    audio.Play();
+                    myRigidbody.AddForce(new Vector2(
+                            parent.JumpHeight.clamp(
+                                (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
+                            parent.JumpWidth.clamp(
+                                (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
+                        ),
+                        ForceMode2D.Impulse
+                    );
+                }
+            }
             //Debug.Log("Bounce");
             isBounce = true;
         }

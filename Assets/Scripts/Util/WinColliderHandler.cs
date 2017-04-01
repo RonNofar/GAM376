@@ -8,10 +8,12 @@ namespace KRaB.Split.Util
 
         [SerializeField]
         private Manager.GameMaster gameMaster;
+
+        private AudioSource audio;
     
     // Use this for initialization
         void Start() {
-
+            audio = GetComponent<AudioSource>();
         }
 
         // Update is called once per frame
@@ -24,6 +26,7 @@ namespace KRaB.Split.Util
             if (collision.gameObject.transform.tag == "Player")
             {
                 gameMaster.Win();
+                audio.Play();
             }
         }
     }

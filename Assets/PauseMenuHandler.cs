@@ -15,12 +15,15 @@ namespace KRaB.Split.UI
         private Button restartButton;
         [SerializeField]
         private Button mainMenuButton;
+
+        private new AudioSource audio;
         #endregion
 
         #region Unity Functions
         private void Awake()
         {
             InitializeListeners();
+            audio = GetComponent<AudioSource>();
         }
         private void OnEnable()
         {
@@ -40,17 +43,20 @@ namespace KRaB.Split.UI
         #region Button Functions
         private void ResumeButton()
         {
+            Manager.GameMaster.Instance.gameObject.GetComponent<AudioSource>().Play();
             Manager.GameMaster.Instance.gameState = 
                 Manager.GameMaster.GameState.InGame;
         }
         private void RestartButton()
         {
+            Manager.GameMaster.Instance.gameObject.GetComponent<AudioSource>().Play();
             /*Manager.GameMaster.Instance.savedState =
                 Manager.GameMaster.GameState.InGame;
             Manager.GameMaster.ReloadScene();*/
         }
         private void MainMenuButton()
         {
+            Manager.GameMaster.Instance.gameObject.GetComponent<AudioSource>().Play();
             Manager.GameMaster.ReloadScene();
         }
         private void InitializeListeners()

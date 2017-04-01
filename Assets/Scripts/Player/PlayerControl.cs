@@ -112,6 +112,16 @@ namespace KRaB.Split.Player
         public float xForce = 12f;
         public float yForce = 25f;
 
+        [Header("Damage")]
+        [SerializeField]
+        private SpriteRenderer[] sprites;
+        [SerializeField]
+        private float flashTime = 0.1f;
+        [SerializeField]
+        private Color flashColor = Color.red;
+
+        private new AudioSource audio;
+
         private ColorManager.eColors[] orbColors =
         { // 0 -> current, 1 -> next, last -> prev
             ColorManager.eColors.Blue,
@@ -206,6 +216,7 @@ namespace KRaB.Split.Player
             }
             halo.SetActive(false);
             spawnPosition = myTransform.position;
+            audio = GetComponent<AudioSource>();
         }
         #endregion
 
@@ -515,6 +526,19 @@ namespace KRaB.Split.Player
             else
             {
                 currentHealth -= damage;
+                audio.Play();
+                Color[] orgColor = new Color[sprites.Length];
+                for (int i = 0; i < sprites.Length; ++i)
+                {
+                    orgColor[i] = sprites[i].color;
+                    sprites[i].color = flashColor;
+                }
+                RTool.WaitAndRunAction(flashTime, () => {
+                    for (int i = 0; i < sprites.Length; ++i)
+                    {
+                        sprites[i].color = orgColor[i];
+                    }
+                });
             }
         }
     }

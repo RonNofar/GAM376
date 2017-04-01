@@ -60,7 +60,7 @@ namespace KRaB.Split.Manager
             set { currentState = value; }
         }
 
-        public float timeCreated = Time.realtimeSinceStartup;
+        public float timeCreated;
 
         private void Awake()
         {

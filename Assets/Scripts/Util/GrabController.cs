@@ -67,6 +67,8 @@ namespace KRaB.Split.Util
 
         private List<GameObject> objs = new List<GameObject>();
 
+        private AudioSource[] audio;
+
         private void Awake()
         {
             SetInitialReferences();
@@ -190,6 +192,7 @@ namespace KRaB.Split.Util
             {
                 Debug.Log("Error: Could not reference targetSprite's transform");
             }
+            audio = GetComponents<AudioSource>();
         }
 
         private IEnumerator GrabDelay(float seconds)
@@ -216,12 +219,15 @@ namespace KRaB.Split.Util
             if (s.Color == color)
             {
                 Destroy(obj);
+                audio[0].Play();
                 return;
             }
             else if (((int)s.Color & (int)color) != 0)
             {
+                audio[0].Play();
                 s.Color ^= color;
             }
+            audio[1].Play();
             obj.GetComponent<Enemy.Slime>().ApplyRejectForce();
         }
 
