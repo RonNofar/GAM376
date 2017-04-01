@@ -35,7 +35,8 @@ namespace KRaB.Split.Enemy
             Debug.Log("Leave");
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             if (e == null) return;
-            e.Zone = null;
+            if(e.Zone == this)
+                e.Zone = null;
             //Zone = null;
         }
 
