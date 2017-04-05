@@ -9287,6 +9287,7 @@ GameObject:
   - component: {fileID: 288113719}
   - component: {fileID: 288113718}
   - component: {fileID: 288113720}
+  - component: {fileID: 288113721}
   m_Layer: 0
   m_Name: MisterMaster
   m_TagString: Untagged
@@ -9406,6 +9407,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &288113721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 288113717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7a55a4b49d0d7a498ee2f4a11fc2710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pixelWidth: 0.025
+  pixelHeight: 0.025
+  globalOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &288324538
 GameObject:
   m_ObjectHideFlags: 0
@@ -22240,6 +22255,7 @@ GameObject:
   - component: {fileID: 712265668}
   - component: {fileID: 712265670}
   - component: {fileID: 712265669}
+  - component: {fileID: 712265671}
   m_Layer: 0
   m_Name: sucker
   m_TagString: Bucket
@@ -22536,6 +22552,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
+--- !u!114 &712265671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 712265662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3792d0b4d4869b543a1fb9976d93a04a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: 0}
+  position: {x: 0, y: 0, z: 0}
+  self: 0
 --- !u!1 &713048979
 GameObject:
   m_ObjectHideFlags: 0
@@ -27240,6 +27270,11 @@ Prefab:
         type: 2}
       propertyPath: maxDistance
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114030512275911076, guid: b275749a672b8ca47b803b80101d8c04,
+        type: 2}
+      propertyPath: position.x
+      value: 1.06
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
@@ -46270,6 +46305,7 @@ GameObject:
   - component: {fileID: 1511679805}
   - component: {fileID: 1511679804}
   - component: {fileID: 1511679809}
+  - component: {fileID: 1511679810}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -46366,6 +46402,20 @@ MonoBehaviour:
   enableMaxSpeed: 0
   maxSpeed: 2
   isDeltaTime: 1
+--- !u!114 &1511679810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1511679803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e45d9e77f6047140910d9e302fc1911, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 0, z: -10}
+  position: {x: 0, y: 0, z: 0}
+  self: 0
 --- !u!1 &1512074162
 GameObject:
   m_ObjectHideFlags: 0
