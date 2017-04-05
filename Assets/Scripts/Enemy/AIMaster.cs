@@ -40,6 +40,13 @@ namespace KRaB.Split.Enemy
 
         }
 
+        public Vector2 clampJump(Vector2 jump)
+        {
+            return new Vector2(
+                JumpWidth.clamp(jump.x),
+                JumpHeight.clamp(jump.y));
+        }
+
         public void register(Enemy s)
         {
             active.Add(s);

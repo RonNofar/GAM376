@@ -102,23 +102,25 @@ namespace KRaB.Split.Enemy
         {
             if (tossed)
                 return;
+            Vector2 move = new Vector2();
             if (Zone)
-                myRigidbody.AddForce(Zone.movement, ForceMode2D.Impulse);
-            else
+                move = Zone.movement;
+
+
+            Vector2 bias=new Vector2();
+            if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < maxDistance)
             {
-                if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < maxDistance)
-                {
-                    audio.Play();
-                    myRigidbody.AddForce(new Vector2(
-                            parent.JumpHeight.clamp(
-                                (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange),
-                            parent.JumpWidth.clamp(
-                                (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce)
-                        ),
-                        ForceMode2D.Impulse
+                bias = new Vector2(
+                            (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange,
+                            (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
                     );
-                }
+                audio.Play();
             }
+            if(Parent)
+                move = Parent.clampJump(move+bias);
+            myRigidbody.AddForce(move,
+                ForceMode2D.Impulse
+            );
             //Debug.Log("Bounce");
             isBounce = true;
         }
