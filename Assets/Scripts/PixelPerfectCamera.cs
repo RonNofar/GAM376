@@ -9,7 +9,7 @@ namespace KRaB
         protected override void Start()
         {
             base.Start();
-            GetComponent<Camera>().orthographicSize = Screen.height / 80;
+            GetComponent<Camera>().orthographicSize = Screen.height / 2/PixelPerfecrManager.Instance.PixelsPerUnit/PixelPerfecrManager.Instance.PixelsPerPixel;
         }
     }
 }

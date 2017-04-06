@@ -17,9 +17,16 @@ namespace KRaB
         [SerializeField]
         private Vector3 globalOffset;
 
+        [SerializeField]
+        private float pixelsPerUnit;
+        [SerializeField]
+        private int pixelsPerPixel;
+
         public float PixelWidth { get { return pixelWidth; } }
         public float PixelHeight { get { return pixelHeight; } }
         public Vector3 GlobalOffset { get { return globalOffset; } }
+        public float PixelsPerUnit { get { return pixelsPerUnit; } }
+        public int PixelsPerPixel { get { return pixelsPerPixel; } }
 
 
         // Use this for initialization

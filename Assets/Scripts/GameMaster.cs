@@ -61,6 +61,7 @@ namespace KRaB.Split.Manager
         }
 
         public float timeCreated;
+        public bool rejectForward = false;
 
         private void Awake()
         {
