@@ -541,6 +541,11 @@ namespace KRaB.Split.Player
                 });
             }
         }
+
+        public void SetSpawn(Vector3 position)
+        {
+            spawnPosition = position;
+        }
     }
 
 }

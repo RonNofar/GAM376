@@ -68,7 +68,11 @@ namespace KRaB.Split.Enemy
 
         public void ApplyRejectForce()
         {
-            myRigidbody.AddForce(new Vector2(player.facingRight ? -player.xForce : player.xForce, player.yForce), ForceMode2D.Impulse);
+            myRigidbody.AddForce(new Vector2(
+                player.facingRight ? 
+                    Manager.GameMaster.Instance.rejectForward ? player.xForce : -player.xForce :
+                    Manager.GameMaster.Instance.rejectForward ? -player.xForce : player.xForce,
+                player.yForce), ForceMode2D.Impulse);
         }
 
         public void launch(ref Transform destination, float totalTime, float curveDamp)
