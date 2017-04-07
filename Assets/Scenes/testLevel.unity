@@ -9990,6 +9990,8 @@ MonoBehaviour:
   pixelWidth: 0.025
   pixelHeight: 0.025
   globalOffset: {x: 0, y: 0, z: 0}
+  pixelsPerUnit: 40
+  pixelsPerPixel: 2
 --- !u!1 &288324538
 GameObject:
   m_ObjectHideFlags: 0
