@@ -8,20 +8,47 @@ namespace KRaB.Split.Tutorial
     {
         [Header("To Unlock")]
         [SerializeField]
-        private GameObject unlock;
+        private GameObject unlockOne;
+        [SerializeField]
+        private GameObject unlockTwo;
+        [SerializeField]
+        private float totalTime = 1f;
+        [SerializeField]
+        private Transform doneTransformOne;
+        [SerializeField]
+        private Transform doneTransformTwo;
+
+        private Vector3 originalPositionOne;
+        private Vector3 donePositionOne;
+
+        private Vector3 originalPositionTwo;
+        private Vector3 donePositionTwo;
+
+        private bool isUnlockedOne = false;
+        private bool isUnlockedTwo = false;
 
         protected override void Awake()
         {
             base.Awake();
-            unlock.SetActive(false);
+
+            originalPositionOne = unlockOne.GetComponent<Transform>().position;
+            donePositionOne = doneTransformOne.GetComponent<Transform>().position;
+            originalPositionTwo = unlockTwo.GetComponent<Transform>().position;
+            donePositionTwo = doneTransformTwo.GetComponent<Transform>().position;
         }
 
         protected override void OnTriggerStay2D (Collider2D collision)
         {
             base.OnTriggerStay2D(collision);
-            if (GameObject.Find("slime(red)") == null && GameObject.Find("slime(yellow)") == null)
+            if (GameObject.Find("slime(red)") == null && !isUnlockedOne)
             {
-                Unlock();
+                StartCoroutine(Unlock(unlockOne, originalPositionOne, donePositionOne));
+                isUnlockedOne = true;
+            }
+            if (GameObject.Find("slime(yellow)") == null && !isUnlockedTwo)
+            {
+                StartCoroutine(Unlock(unlockTwo, originalPositionTwo, donePositionTwo));
+                isUnlockedTwo = true;
             }
         }
 
@@ -31,9 +58,20 @@ namespace KRaB.Split.Tutorial
             base.OnTriggerExit2D(collision);
         }
 
-        private void Unlock()
+        IEnumerator Unlock(GameObject unlock, Vector3 originalPosition, Vector3 donePosition)
         {
-            unlock.SetActive(true);
+            Transform transform = unlock.GetComponent<Transform>();
+            float startTime = Time.time;
+            float timeRatio = 0f;
+            while (timeRatio < 1f)
+            {
+                timeRatio = (Time.time - startTime) / totalTime;
+                timeRatio = (timeRatio > 1) ? 1 : timeRatio;
+
+                transform.position = Vector3.Lerp(originalPosition, donePosition, timeRatio);
+
+                yield return null;
+            }
         }
     }
 }
