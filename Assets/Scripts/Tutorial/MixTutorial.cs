@@ -9,11 +9,22 @@ namespace KRaB.Split.Tutorial
         [Header("To Unlock")]
         [SerializeField]
         private GameObject unlock;
+        [SerializeField]
+        private float totalTime = 1f;
+        [SerializeField]
+        private Transform doneTransform;
+
+        private Vector3 originalPosition;
+        private Vector3 donePosition;
+
+        private bool isUnlocked = false;
 
         protected override void Awake()
         {
             base.Awake();
-            unlock.SetActive(false);
+
+            originalPosition = unlock.GetComponent<Transform>().position;
+            donePosition = doneTransform.GetComponent<Transform>().position;
         }
 
         protected override void OnTriggerStay2D (Collider2D collision)
@@ -21,19 +32,33 @@ namespace KRaB.Split.Tutorial
             base.OnTriggerStay2D(collision);
             if (GameObject.Find("slime(purple)") == null)
             {
-                Unlock();
+                if (!isUnlocked)
+                {
+                    StartCoroutine(Unlock());
+                    isUnlocked = true;
+                }
             }
         }
 
         protected override void OnTriggerExit2D(Collider2D collision)
         {
-            Debug.Log("Unlock");
             base.OnTriggerExit2D(collision);
         }
 
-        private void Unlock()
+        IEnumerator Unlock()
         {
-            unlock.SetActive(true);
+            Transform transform = unlock.GetComponent<Transform>();
+            float startTime = Time.time;
+            float timeRatio = 0f;
+            while (timeRatio < 1f)
+            {
+                timeRatio = (Time.time - startTime) / totalTime;
+                timeRatio = (timeRatio > 1) ? 1 : timeRatio;
+
+                transform.position = Vector3.Lerp(originalPosition, donePosition, timeRatio);
+
+                yield return null;
+            }
         }
     }
 }
