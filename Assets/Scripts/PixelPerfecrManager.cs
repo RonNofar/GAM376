@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace KRaB
 {
-
-    public class PixelPerfecrManager : MonoBehaviour
+    [CreateAssetMenu]
+    public class PixelPerfecrManager : ScriptableObject
     {
 
         public static PixelPerfecrManager Instance { get; private set; }
@@ -22,11 +22,11 @@ namespace KRaB
         [SerializeField]
         private int pixelsPerPixel;
 
-        public float PixelWidth { get { return pixelWidth; } }
-        public float PixelHeight { get { return pixelHeight; } }
+        public float PixelWidth { get { return pixelWidth > 0 ? pixelWidth : 1; } }
+        public float PixelHeight { get { return pixelHeight > 0 ? pixelHeight : 1; } }
         public Vector3 GlobalOffset { get { return globalOffset; } }
-        public float PixelsPerUnit { get { return pixelsPerUnit; } }
-        public int PixelsPerPixel { get { return pixelsPerPixel; } }
+        public float PixelsPerUnit { get { return pixelsPerUnit > 0 ? pixelsPerUnit : 1; } }
+        public int PixelsPerPixel { get { return pixelsPerPixel > 0 ? pixelsPerPixel : 1; } }
 
 
         // Use this for initialization
@@ -38,14 +38,6 @@ namespace KRaB
             pixelWidth = (pixelWidth > 0) ? pixelWidth : 1;
             pixelHeight = (pixelHeight > 0) ? pixelHeight : 1;
 
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
-            pixelWidth = (pixelWidth > 0) ? pixelWidth : 0.0001f;
-            pixelHeight = (pixelHeight > 0) ? pixelHeight : 0.0001f;
         }
     }
 }
