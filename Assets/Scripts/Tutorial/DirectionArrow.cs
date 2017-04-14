@@ -14,8 +14,11 @@ namespace KRaB.Split.Tutorial
 
         private Transform myTransform;
         private Vector3 originalPosition;
+        private Vector3 originalRotation;
         private Vector3 donePosition;
-        private float distance;
+        private Vector3 doneRotation;
+        private float[] distanceXYZ = new float[3];
+        private float[] angleXYZ = new float[3];
 
         private bool isTriggered = false;
         private bool isOn = false;
@@ -31,8 +34,16 @@ namespace KRaB.Split.Tutorial
 
             myTransform = GetComponent<Transform>();
             originalPosition = myTransform.position;
+            originalRotation = myTransform.localEulerAngles;
             donePosition = doneTransform.position;
-            distance = Vector3.Distance(originalPosition, donePosition);
+            doneRotation = doneTransform.localEulerAngles;
+            Debug.Log(doneRotation);
+            distanceXYZ[0] = Mathf.Abs(originalPosition.x - donePosition.x);
+            distanceXYZ[1] = Mathf.Abs(originalPosition.y - donePosition.y);
+            distanceXYZ[2] = Mathf.Abs(originalPosition.z - donePosition.z);
+            angleXYZ[0]    = Mathf.Abs(originalRotation.x - doneRotation.x);
+            angleXYZ[1]    = Mathf.Abs(originalRotation.y - doneRotation.y);
+            angleXYZ[2]    = Mathf.Abs(originalRotation.z - doneRotation.z);
         }
 
         protected override void OnTriggerStay2D(Collider2D collision)
@@ -40,33 +51,7 @@ namespace KRaB.Split.Tutorial
             base.OnTriggerStay2D(collision);
 
             if (!isOn) isTriggered = true;
-            if (isTriggered)
-            {
-                startTime = Time.time;
-
-                isTriggered = false;
-                isOn = true;
-            }
-            if (isOn)
-            {
-                timeRatio = (Time.time - startTime) / totalTime;
-                timeRatio = (timeRatio > 1) ? 1 : timeRatio;
-                // SinLerp for Vector3 here
-
-                //Debug.Log(startTime + " | " + Time.time + " | " + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distance / 2));
-
-                myTransform.position = new Vector3(
-                    originalPosition.x,
-                    originalPosition.y + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distance / 2),
-                    originalPosition.z
-                );
-                // To make this into a multi axis function, simply caluclate the distance of each axis then use that individually when assigning position
-
-                if (timeRatio == 1)
-                {
-                    isOn = false;
-                }
-            }
+            ApplyAnimation();
         }
 
         protected override void OnTriggerExit2D(Collider2D collision)
@@ -95,12 +80,18 @@ namespace KRaB.Split.Tutorial
                 timeRatio = (timeRatio > 1) ? 1 : timeRatio;
                 // SinLerp for Vector3 here
 
-                Debug.Log(startTime + " | " + Time.time + " | " + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distance / 2));
+                Debug.Log(startTime + " | " + Time.time + " | " + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[1] / 2));
 
                 myTransform.position = new Vector3(
-                    originalPosition.x,
-                    originalPosition.y + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distance / 2),
-                    originalPosition.z
+                    originalPosition.x + ((distanceXYZ[0] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[0] / 2) : 0f),
+                    originalPosition.y + ((distanceXYZ[1] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[1] / 2) : 0f),
+                    originalPosition.z + ((distanceXYZ[2] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[2] / 2) : 0f)
+                );
+
+                myTransform.localEulerAngles = new Vector3(
+                    originalRotation.x + ((angleXYZ[0] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[0] / 2) : 0f),
+                    originalRotation.y + ((angleXYZ[1] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[1] / 2) : 0f),
+                    originalRotation.z + ((angleXYZ[2] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[2] / 2) : 0f)
                 );
 
                 if (timeRatio == 1)
