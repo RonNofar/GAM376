@@ -8,7 +8,8 @@ namespace KRaB.Split.Tutorial
     {
         [SerializeField]
         private float totalTime = 0.5f;
-
+        [SerializeField]
+        private Transform originalTransform;
         [SerializeField]
         private Transform doneTransform;
 
@@ -19,6 +20,7 @@ namespace KRaB.Split.Tutorial
         private Vector3 doneRotation;
         private float[] distanceXYZ = new float[3];
         private float[] angleXYZ = new float[3];
+        private float[] angleAverageXYZ = new float[3];
 
         private bool isTriggered = false;
         private bool isOn = false;
@@ -32,7 +34,7 @@ namespace KRaB.Split.Tutorial
         {
             base.Awake();
 
-            myTransform = GetComponent<Transform>();
+            myTransform = (originalTransform != null) ? originalTransform : GetComponent<Transform>();
             originalPosition = myTransform.position;
             originalRotation = myTransform.localEulerAngles;
             donePosition = doneTransform.position;
@@ -44,6 +46,9 @@ namespace KRaB.Split.Tutorial
             angleXYZ[0]    = Mathf.Abs(originalRotation.x - doneRotation.x);
             angleXYZ[1]    = Mathf.Abs(originalRotation.y - doneRotation.y);
             angleXYZ[2]    = Mathf.Abs(originalRotation.z - doneRotation.z);
+            angleAverageXYZ[0] = 0.5f * (originalRotation.x + doneRotation.x);
+            angleAverageXYZ[1] = 0.5f * (originalRotation.y + doneRotation.y);
+            angleAverageXYZ[2] = 0.5f * (originalRotation.z + doneRotation.z);
         }
 
         protected override void OnTriggerStay2D(Collider2D collision)
@@ -89,9 +94,9 @@ namespace KRaB.Split.Tutorial
                 );
 
                 myTransform.localEulerAngles = new Vector3(
-                    originalRotation.x + ((angleXYZ[0] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[0] / 2) : 0f),
-                    originalRotation.y + ((angleXYZ[1] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[1] / 2) : 0f),
-                    originalRotation.z + ((angleXYZ[2] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (angleXYZ[2] / 2) : 0f)
+                    originalRotation.x + ((angleXYZ[0] != 0) ? (angleXYZ[0] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[0] : 0f),
+                    originalRotation.y + ((angleXYZ[1] != 0) ? (angleXYZ[1] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[1] : 0f),
+                    originalRotation.z + ((angleXYZ[2] != 0) ? (angleXYZ[2] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[2] : 0f)
                 );
 
                 if (timeRatio == 1)
