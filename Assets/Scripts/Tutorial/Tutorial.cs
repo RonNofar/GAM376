@@ -13,6 +13,7 @@ namespace KRaB.Split.Tutorial
         protected virtual void Awake()
         {
             SetCanvasRenderArrayAlpha(0f, toRender);
+            toRender = GetComponentsInChildren<CanvasRenderer>(true);
         }
 
         protected virtual void OnTriggerStay2D(Collider2D collision)
