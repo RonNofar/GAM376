@@ -6,6 +6,6 @@ namespace KRaB.Split.UI
 {
     public interface ColoredObject
     {
-        ColorManager.eColors Color { get; set; }
+        KRaB.Enemy.Color.EnemyColor ColorData { get; set; }
     }
 }

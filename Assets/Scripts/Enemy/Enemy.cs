@@ -38,8 +38,9 @@ namespace KRaB.Split.Enemy
         protected bool tossed { get; private set; }
 
         protected virtual void OnDestroy()
-        {
-            parent.deregister(this);
+        { 
+            if(Parent!=null)
+                parent.deregister(this);
         }
 
 
