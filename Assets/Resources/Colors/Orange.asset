@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4780e71b666e624cbebb23518b43482, type: 3}
   m_Name: Orange
   m_EditorClassIdentifier: 
-  color: {r: 0.9852941, g: 0.59117645, b: 0, a: 0}
+  color: {r: 0.9852941, g: 0.59117645, b: 0, a: 1}
   components:
   - {fileID: 11400000, guid: ffd9af7876bdbd24e87a0d794333843d, type: 2}
   - {fileID: 11400000, guid: 09dd481968abc4f438d37897a452ed00, type: 2}
