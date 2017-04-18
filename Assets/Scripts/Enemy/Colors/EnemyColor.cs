@@ -38,7 +38,6 @@ namespace KRaB.Enemy.Color
             }
             if (c == o)
             {
-                Debug.Log("subtract to null");
                 return null;
             }
             return c;
