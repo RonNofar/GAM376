@@ -18,12 +18,7 @@ namespace KRaB.Split.Enemy
                 mySpriteRenderer.color = colorData.color;
             }
         }
-
-        [Header("Damage")]
-        [SerializeField]
-        private float damage = 2f;
-        [SerializeField]
-        private Util.RTool.FloatRange damageDelay;
+        
         private float damageTime = 0f;
 
         [Header("Movement")]
@@ -90,8 +85,11 @@ namespace KRaB.Split.Enemy
             {
                 if (collision.gameObject.GetComponent<Transform>().tag == "Player")
                 {
-                    player.DamagePlayer(damage);
-                    damageTime = Time.time + damageDelay.RandomInRange;
+                    if (Parent != null)
+                    {
+                        player.DamagePlayer(Parent.Damage);
+                        damageTime = Time.time + Parent.DamageDelay;
+                    }
                 }
             }
 
@@ -108,7 +106,7 @@ namespace KRaB.Split.Enemy
 
 
             Vector2 bias=new Vector2();
-            if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < maxDistance)
+            if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < (Parent?Parent.SearchDistance:maxDistance))
             {
                 bias = new Vector2(
                             (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange,

@@ -8,9 +8,24 @@ namespace KRaB.Split.Enemy
     [CreateAssetMenu]
     public class AIMaster : ScriptableObject
     {
+        [Header("Jumping")]
         public Util.FloatRange JumpHeight;
         public Util.FloatRange JumpWidth;
+        [SerializeField]
+        private float searchDistance;
+        public float SearchDistance { get { return searchDistance; } }
 
+
+        [Header("Damage")]
+        [SerializeField]
+        private int damage;
+        [SerializeField]
+        private Util.RTool.FloatRange damageDelay;
+
+        public int Damage { get { return damage; } }
+        public float DamageDelay { get { return damageDelay.RandomInRange; } }
+
+        [Header("Spawning")]
         [SerializeField]
         private GameObject SpawnerPrefab;
 

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cde036a6a9a790a4685f8328dd783c61, type: 3}
-  m_Name: BaseAI
+  m_Name: TutorialAI
   m_EditorClassIdentifier: 
   JumpHeight:
     min: 3
@@ -17,10 +17,10 @@ MonoBehaviour:
   JumpWidth:
     min: 0
     max: 5
-  searchDistance: 8
-  damage: 10
+  searchDistance: 5
+  damage: 5
   damageDelay:
-    min: 1
-    max: 2
+    min: 2
+    max: 4
   SpawnerPrefab: {fileID: 0}
-  maxSpawns: 3
+  maxSpawns: 0

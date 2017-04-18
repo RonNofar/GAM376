@@ -77623,12 +77623,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 2
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 21900d173cdf59f479f9730643268744, type: 2}
+  colorData: {fileID: 11400000, guid: ffd9af7876bdbd24e87a0d794333843d, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -77715,12 +77711,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 1
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -77775,12 +77767,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 2
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -77923,12 +77911,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 5
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -78222,12 +78206,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 6
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -78295,12 +78275,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 1
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -78346,12 +78322,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 4
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 21900d173cdf59f479f9730643268744, type: 2}
+  colorData: {fileID: 11400000, guid: 09dd481968abc4f438d37897a452ed00, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -78654,12 +78626,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 3
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -78803,7 +78771,7 @@ MonoBehaviour:
   grabMaxSpeed: 2
   targetSpritePrefab: {fileID: 1890493924233584, guid: b4e961c1bc0bd5142a38c7ffcfcd9390,
     type: 2}
-  color: 0
+  color: {fileID: 0}
 --- !u!114 &3885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79209,12 +79177,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 4
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79325,12 +79289,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 3
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79358,12 +79318,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 5
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79422,12 +79378,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 6
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79753,12 +79705,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 5
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79786,12 +79734,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 2
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79837,12 +79781,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 4
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -79988,12 +79928,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 1
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 21900d173cdf59f479f9730643268744, type: 2}
+  colorData: {fileID: 11400000, guid: 0a4f48d1e3c257c4aa1e9e5d0e7d1467, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -80140,12 +80076,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 5
-  damage: 4
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -80272,6 +80204,10 @@ MonoBehaviour:
   sprites: []
   flashTime: 1
   flashColor: {r: 1, g: 0, b: 0, a: 1}
+  orbColors:
+  - {fileID: 11400000, guid: 0a4f48d1e3c257c4aa1e9e5d0e7d1467, type: 2}
+  - {fileID: 11400000, guid: ffd9af7876bdbd24e87a0d794333843d, type: 2}
+  - {fileID: 11400000, guid: 09dd481968abc4f438d37897a452ed00, type: 2}
 --- !u!114 &3948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -80306,12 +80242,8 @@ MonoBehaviour:
   position: {x: 1.06, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 4
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 0baba6089a74f544bb733a53665c7113, type: 2}
+  colorData: {fileID: 11400000, guid: e51f5537211ce984da23b3c0536e2631, type: 2}
   jumpDelay:
     min: 1
     max: 5
@@ -80484,12 +80416,8 @@ MonoBehaviour:
   position: {x: 0, y: 0, z: 0}
   self: 0
   minimumHeight: -100
-  parent: {fileID: 0}
-  color: 3
-  damage: 2
-  damageDelay:
-    min: 1
-    max: 2
+  parent: {fileID: 11400000, guid: 21900d173cdf59f479f9730643268744, type: 2}
+  colorData: {fileID: 11400000, guid: aa64a82d0971fff4baaa64b88925d979, type: 2}
   jumpDelay:
     min: 1
     max: 5
