@@ -2,43 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KRaB.Enemy.Color {
-    [CreateAssetMenu(order =12)]
+namespace KRaB.Enemy.Color
+{
+    [CreateAssetMenu(order = 12)]
     public class CompositeColor : EnemyColor
     {
         [SerializeField]
-        List<EnemyColor> components;
+        protected List<PrimaryColor> components;
         [SerializeField]
         List<DecompositionPair> decomposition;
 
         public static bool operator ==(CompositeColor c, EnemyColor o)
         {
-            if (c == o)
+            if (o is CompositeColor)
             {
+                foreach (PrimaryColor comp in ((CompositeColor)o).components)
+                {
+                    if (c.components.Contains(comp))
+                        continue;
+                    return false;
+                }
                 return true;
             }
-            if(o is PrimaryColor)
+            if (o is PrimaryColor)
             {
                 return c.components.Contains((PrimaryColor)o);
             }
             return false;
-
         }
+
         public static bool operator !=(CompositeColor c, EnemyColor o)
         {
             return !(c == o);
         }
-        public static EnemyColor operator-(CompositeColor c,EnemyColor o)
+
+        public static EnemyColor operator -(CompositeColor c, EnemyColor o)
         {
-            if (c == o)
-                return null;
-            if(o is PrimaryColor)
+            if (o is PrimaryColor)
             {
-                foreach(DecompositionPair pair in c.decomposition)
+                for(int i = 0;i<c.decomposition.Count;i++)
                 {
-                    if(pair.removed == o)
+                    if (c.decomposition[i].removed == o)
                     {
-                        return pair.remaining;
+                        return c.decomposition[i].remaining;
                     }
                 }
             }

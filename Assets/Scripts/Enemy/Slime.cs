@@ -8,14 +8,14 @@ namespace KRaB.Split.Enemy
     public class Slime : Enemy, ColoredObject
     {
         [SerializeField]
-        private ColorManager.eColors color;
-        public ColorManager.eColors Color
+        private KRaB.Enemy.Color.EnemyColor colorData;
+        public KRaB.Enemy.Color.EnemyColor ColorData
         {
-            get { return color; }
+            get { return colorData; }
             set
             {
-                color = value;
-                mySpriteRenderer.color = ColorManager.GetColor(color);
+                colorData = value;
+                mySpriteRenderer.color = colorData.color;
             }
         }
 
@@ -51,7 +51,7 @@ namespace KRaB.Split.Enemy
         protected override void Start()
         {
             base.Start();
-            Color = color;
+            ColorData = colorData;
             audio = GetComponent<AudioSource>();
         }
 

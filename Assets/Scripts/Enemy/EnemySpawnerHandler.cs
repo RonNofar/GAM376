@@ -14,11 +14,10 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private GameObject enemy;
         [SerializeField]
-        private ColorManager.eColors colorType;
-        [SerializeField]
-        private RTool.FloatRange colorRange;
-        [SerializeField]
         private bool isOneColor = false;
+
+        [SerializeField]
+        private KRaB.Enemy.Color.EnemyColor[] possibleSpawns;
 
         private bool isStart = false;
         private float startTime = 0f;
@@ -49,11 +48,9 @@ namespace KRaB.Split.Enemy
             Debug.Log("Spawn start");
             while (spawning)
             {
-                Debug.Log("Spawn Continues");
-                ColorManager.eColors m = isOneColor ? colorType : (UI.ColorManager.eColors)(1<<Random.Range((int)colorRange.min, (int)colorRange.max));
-                //Debug.Log((ColorManager.eColors)3);
-                enemy.GetComponent<Slime>().Color = m;
+                KRaB.Enemy.Color.EnemyColor m = possibleSpawns[Random.Range(0, possibleSpawns.Length)];
                 GameObject temp = Instantiate(enemy);
+                temp.GetComponent<Slime>().ColorData = m;
                 temp.transform.position = transform.position;
                 yield return new WaitForSeconds(enemySpawnDelay.RandomInRange);
 
