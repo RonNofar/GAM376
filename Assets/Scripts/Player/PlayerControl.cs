@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 using KRaB.Split.UI;
 using KRaB.Split.Util;
 using KRaB.Split.Player;
@@ -8,6 +9,9 @@ namespace KRaB.Split.Player
 {
     public class PlayerControl : External.PlayerControl
     {
+        static public PlayerControl Instance {  get { return _instance; } }
+        static public PlayerControl _instance;
+
         [Header("Player Variables")]
         [SerializeField]
         private float maxHealth = 100f;
@@ -119,6 +123,16 @@ namespace KRaB.Split.Player
         private float flashTime = 0.1f;
         [SerializeField]
         private Color flashColor = Color.red;
+        [SerializeField]
+        private float HealthChangeTime = 2f;
+        [SerializeField]
+        private GameObject HealthChangeCanvas;
+        [SerializeField]
+        private float HealthChangeMovementScaler = 2f;
+        [SerializeField]
+        private float HealthChangeFadeTime = 0.5f;
+        [SerializeField]
+        private Transform HealthChangeStartTransform;
 
         private new AudioSource audio;
 
@@ -134,6 +148,7 @@ namespace KRaB.Split.Player
             base.Awake();
             // Setting up references.
 
+            _instance = this;
             SetInitialReferences();
             UpdateBucketColor(orbColors[0]);
         }
@@ -516,15 +531,17 @@ namespace KRaB.Split.Player
             return currentHealth / maxHealth;
         }
 
-        public void DamagePlayer(float damage)
+        public void Damage(float damage)
         {
             if (currentHealth - damage < 0)
             {
+                StartCoroutine(HealthChange(0 - currentHealth));
                 currentHealth = 0f;
                 Death();
             }
             else
             {
+                StartCoroutine(HealthChange(-damage));
                 currentHealth -= damage;
                 audio.Play();
                 Color[] orgColor = new Color[sprites.Length];
@@ -542,9 +559,75 @@ namespace KRaB.Split.Player
             }
         }
 
+        public void Heal(float amount)
+        {
+            float temp = currentHealth + amount;
+            if (temp >= maxHealth)
+            {
+                StartCoroutine(HealthChange(maxHealth - currentHealth));
+                currentHealth = maxHealth;
+            }
+            else
+            {
+                currentHealth = temp;
+                StartCoroutine(HealthChange(amount));
+            }
+        }
+
         public void SetSpawn(Vector3 position)
         {
             spawnPosition = position;
+        }
+
+        private IEnumerator HealthChange(float amount)
+        {
+            float startTime = Time.time;
+            float timeRatio = 0f;
+            bool coroutineStarted = false;
+
+            GameObject canvas = (GameObject)Instantiate(HealthChangeCanvas,HealthChangeStartTransform.position,HealthChangeStartTransform.rotation);
+            Transform text = canvas.GetComponent<Transform>().GetChild(0).GetComponent<Transform>();
+            text.GetComponent<Text>().text = (amount >= 0) ? "+"+amount.ToString() : amount.ToString();
+            text.GetComponent<Text>().color = (amount >= 0) ? Color.green : Color.red;
+
+            while (timeRatio < 1)
+            {
+                timeRatio = (Time.time - startTime) / HealthChangeTime;
+                if (Time.time >= startTime + HealthChangeFadeTime && !coroutineStarted)
+                {
+                    StartCoroutine(fadeOut(text.GetComponent<CanvasRenderer>()));
+                    coroutineStarted = true;
+                }
+                if (timeRatio >= 1) timeRatio = 1;
+                text.localPosition = new Vector3(
+                    text.localPosition.x,
+                    HealthChangeMovementScaler * timeRatio,
+                    text.localPosition.z
+                );
+                yield return null;
+            }
+            Destroy(canvas);
+        }
+
+        IEnumerator fadeOut(CanvasRenderer cr)
+        {
+            float f_startTime = Time.time;
+            float f_timeRatio = 0f;
+
+            while (f_timeRatio < 1)
+            {
+                f_timeRatio = (Time.time - f_startTime) / HealthChangeFadeTime;
+                if (f_timeRatio >= 1) f_timeRatio = 1;
+
+                Debug.Log(f_timeRatio);
+                cr.GetComponent<CanvasRenderer>().SetAlpha(1-f_timeRatio);
+                if (f_timeRatio == 1)
+                {
+                    break;
+                }
+
+                yield return null;
+            }
         }
     }
 
