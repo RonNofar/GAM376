@@ -63,6 +63,8 @@ namespace KRaB.Split.Manager
         public float timeCreated;
         public bool rejectForward = false;
 
+        public bool isQuitting = false;
+
         private void Awake()
         {
             timeCreated = Time.realtimeSinceStartup;
@@ -87,6 +89,11 @@ namespace KRaB.Split.Manager
             else gameState = GameState.MainMenu;
             winText.enabled = false;
             player = GameObject.FindWithTag("Player").GetComponent<Player.PlayerControl>();
+        }
+
+        private void OnApplicationQuit()
+        {
+            isQuitting = true;
         }
 
         // Update is called once per frame

@@ -133,9 +133,14 @@ namespace KRaB.Split.Enemy
 
         protected override void OnDestroy()
         {
-            if (Random.Range(0f,1f) < healthDropRatio)
-                Instantiate(healthDropPrefab, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+            if (!Manager.GameMaster.Instance.isQuitting)
+            {
+                if (Random.Range(0f, 1f) < healthDropRatio)
+                    Instantiate(healthDropPrefab, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+            }
             base.OnDestroy();
         }
+
+        
     }
 }
