@@ -43,9 +43,15 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private SpriteRenderer mySpriteRenderer;
 
+        [Header("Health Drop")]
+        [SerializeField]
+        private GameObject healthDropPrefab;
+        [SerializeField]
+        private float healthDropRatio = 0.5f;
+
         private float delayTime = 0f;
         private bool isBounce = false;
-        private AudioSource audio;
+        private new AudioSource audio;
 
         // Use this for initialization
         protected override void Start()
@@ -123,6 +129,13 @@ namespace KRaB.Split.Enemy
             );
             //Debug.Log("Bounce");
             isBounce = true;
+        }
+
+        protected override void OnDestroy()
+        {
+            if (Random.Range(0f,1f) < healthDropRatio)
+                Instantiate(healthDropPrefab, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+            base.OnDestroy();
         }
     }
 }

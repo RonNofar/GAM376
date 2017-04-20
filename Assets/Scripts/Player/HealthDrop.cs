@@ -14,6 +14,7 @@ namespace KRaB.Split.Player
             if(col.gameObject.GetComponent<Transform>().tag == "Player")
             {
                 Player.PlayerControl.Instance.Heal(healAmount);
+                Destroy(gameObject);
             }
         }
     }

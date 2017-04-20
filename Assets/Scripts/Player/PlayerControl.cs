@@ -19,6 +19,8 @@ namespace KRaB.Split.Player
         private float currentHealth = 100f;
         [SerializeField]
         private float minimumHeight = -100f;
+        [SerializeField]
+        private float maxVelocity = 20f;
         [HideInInspector]
         public bool isDead = false;
         
@@ -290,6 +292,11 @@ namespace KRaB.Split.Player
             if (isRevive)
             {
                 Revive();
+            }
+
+            if (myRigidbody.velocity.magnitude > maxVelocity)
+            {
+                myRigidbody.velocity = myRigidbody.velocity.normalized * maxVelocity;
             }
         }
 
