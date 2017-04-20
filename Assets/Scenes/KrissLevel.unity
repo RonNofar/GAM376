@@ -33047,7 +33047,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -33515,7 +33515,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!108 &2857
 Light:
   m_ObjectHideFlags: 0
@@ -59248,6 +59248,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 2912}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59340,6 +59341,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 2929}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3842
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59400,6 +59402,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 2956}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59548,6 +59551,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 2984}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59847,6 +59851,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3042}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59860,6 +59865,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toRender: []
   totalTime: 0.5
+  originalTransform: {fileID: 0}
+  doneTransform: {fileID: 0}
 --- !u!114 &3864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59920,6 +59927,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 6
   mySpriteRenderer: {fileID: 3055}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59971,6 +59979,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 3061}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60265,6 +60274,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3145}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60862,6 +60872,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3285}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60978,6 +60989,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3315}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61011,6 +61023,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3333}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3911
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61075,6 +61088,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3362}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3914
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61427,6 +61441,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3444}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3929
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61460,6 +61475,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 4
   mySpriteRenderer: {fileID: 3458}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61511,6 +61527,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3470}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3932
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61649,11 +61666,11 @@ MonoBehaviour:
   color: 1
   damage: 2
   damageDelay:
-    min: 1
-    max: 2
+    min: 10
+    max: 10
   jumpDelay:
     min: 1
-    max: 5
+    max: 1
   jumpForce:
     min: 1
     max: 2
@@ -61662,6 +61679,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 7
   mySpriteRenderer: {fileID: 3533}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61814,6 +61832,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3588}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61871,10 +61890,8 @@ MonoBehaviour:
   jump: 0
   moveForce: 100
   maxSpeed: 4
-  jumpClips:
-  - {fileID: 8300000, guid: 50a8d8a939a0f4e77a0dac6ecd2e582b, type: 3}
-  - {fileID: 8300000, guid: fc55d077383484ac0ad66aa17fcd746f, type: 3}
-  - {fileID: 8300000, guid: dafa1cc4eb8714341a7c595abfba35d8, type: 3}
+  jumpSound: {fileID: 11400000, guid: f794e1b8cc4bdac4aacd6dfb4c764065, type: 2}
+  audio: {fileID: 2850}
   jumpForce: 600
   taunts:
   - {fileID: 8300000, guid: 27cbebf9d650249e5b032494eae5322c, type: 3}
@@ -61980,6 +61997,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 4
   mySpriteRenderer: {fileID: 3633}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -71369,6 +71387,7 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 657377637}
+  button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!58 &657377635
 CircleCollider2D:
   m_ObjectHideFlags: 0

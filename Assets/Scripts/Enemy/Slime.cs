@@ -45,6 +45,8 @@ namespace KRaB.Split.Enemy
 
         private float delayTime = 0f;
         private bool isBounce = false;
+        [SerializeField]
+        private Environment.SoundGroup button;
         private AudioSource audio;
 
         // Use this for initialization
@@ -114,7 +116,7 @@ namespace KRaB.Split.Enemy
                             (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange,
                             (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
                     );
-                audio.Play();
+                button.Play(audio);
             }
             if(Parent)
                 move = Parent.clampJump(move+bias);
