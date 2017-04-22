@@ -333,8 +333,7 @@ namespace KRaB.Split.Player
 
                 currentHealth = maxHealth;
 
-                GetComponent<BoxCollider2D>().enabled = false;
-                GetComponent<CircleCollider2D>().enabled = false;
+                GetComponent<Collider2D>().enabled = false;
 
                 leftWing.SetActive(true);
                 rightWing.SetActive(true);
@@ -367,8 +366,7 @@ namespace KRaB.Split.Player
                     isRevive = false;
                     isReviveSequence = false;
 
-                    GetComponent<BoxCollider2D>().enabled = true;
-                    GetComponent<CircleCollider2D>().enabled = true;
+                    GetComponent<Collider2D>().enabled = true;
 
                     leftWing.SetActive(false);
                     rightWing.SetActive(false);
@@ -593,9 +591,9 @@ namespace KRaB.Split.Player
             float timeRatio = 0f;
             bool coroutineStarted = false;
 
-            GameObject canvas = (GameObject)Instantiate(HealthChangeCanvas,HealthChangeStartTransform.position,HealthChangeStartTransform.rotation);
+            GameObject canvas = (GameObject)Instantiate(HealthChangeCanvas, HealthChangeStartTransform.position, HealthChangeStartTransform.rotation);
             Transform text = canvas.GetComponent<Transform>().GetChild(0).GetComponent<Transform>();
-            text.GetComponent<Text>().text = (amount >= 0) ? "+"+amount.ToString() : amount.ToString();
+            text.GetComponent<Text>().text = (amount >= 0) ? "+ "+amount.ToString() : "- "+(-amount).ToString();
             text.GetComponent<Text>().color = (amount >= 0) ? Color.green : Color.red;
 
             while (timeRatio < 1)
