@@ -384,6 +384,7 @@ namespace KRaB.Split.Player
 
         void Shovel()
         {
+            anim.SetTrigger("Shovel");
             isShovel = true;
             isShovelCurve = true;
             // call shovel handler
@@ -396,7 +397,7 @@ namespace KRaB.Split.Player
             //Debug.Log("Add: " + addAngle);
             //Debug.Log("Z: " + bucketTransform.localEulerAngles.z + " + " + addAngle + " | Total: " + (bucketTransform.localEulerAngles.z + addAngle));
             //addAngle = facingRight ? addAngle : -addAngle;
-            if ((Time.time - currTime) > shovelDelay / 2) isShovelCurve = false;
+            if ((Time.time - currTime) > shovelDelay) isShovelCurve = false;
             shovelPivotTransform.localEulerAngles = new Vector3(
                 shovelPivotTransform.localEulerAngles.x,
                 shovelPivotTransform.localEulerAngles.y,
