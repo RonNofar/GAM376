@@ -540,7 +540,7 @@ namespace KRaB.Split.Player
 
         public void Damage(float damage)
         {
-            if (currentHealth - damage < 0)
+            if (currentHealth - damage <= 0)
             {
                 StartCoroutine(HealthChange(0 - currentHealth));
                 currentHealth = 0f;

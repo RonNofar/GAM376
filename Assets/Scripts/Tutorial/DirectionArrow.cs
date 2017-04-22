@@ -62,7 +62,7 @@ namespace KRaB.Split.Tutorial
         protected override void OnTriggerExit2D(Collider2D collision)
         {
             base.OnTriggerExit2D(collision);
-            //isOn = false;
+            isOn = false;
         }
 
         void FixedUpdate()
@@ -85,18 +85,19 @@ namespace KRaB.Split.Tutorial
                 timeRatio = (timeRatio > 1) ? 1 : timeRatio;
                 // SinLerp for Vector3 here
 
-                Debug.Log(startTime + " | " + Time.time + " | " + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[1] / 2));
+                //Debug.Log(startTime + " | " + Time.time + " | " + Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[1] / 2));
 
+                float temp = Mathf.Sin(timeRatio * (2 * Mathf.PI));
                 myTransform.position = new Vector3(
-                    originalPosition.x + ((distanceXYZ[0] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[0] / 2) : 0f),
-                    originalPosition.y + ((distanceXYZ[1] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[1] / 2) : 0f),
-                    originalPosition.z + ((distanceXYZ[2] != 0) ? Mathf.Sin(timeRatio * (2 * Mathf.PI)) * (distanceXYZ[2] / 2) : 0f)
+                    originalPosition.x + ((distanceXYZ[0] != 0) ? temp * (distanceXYZ[0] / 2) : 0f),
+                    originalPosition.y + ((distanceXYZ[1] != 0) ? temp * (distanceXYZ[1] / 2) : 0f),
+                    originalPosition.z + ((distanceXYZ[2] != 0) ? temp * (distanceXYZ[2] / 2) : 0f)
                 );
 
                 myTransform.localEulerAngles = new Vector3(
-                    originalRotation.x + ((angleXYZ[0] != 0) ? (angleXYZ[0] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[0] : 0f),
-                    originalRotation.y + ((angleXYZ[1] != 0) ? (angleXYZ[1] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[1] : 0f),
-                    originalRotation.z + ((angleXYZ[2] != 0) ? (angleXYZ[2] / 2) * Mathf.Sin(timeRatio * (2 * Mathf.PI)) + angleAverageXYZ[2] : 0f)
+                    originalRotation.x + ((angleXYZ[0] != 0) ? (angleXYZ[0] / 2) * temp + angleAverageXYZ[0] : 0f),
+                    originalRotation.y + ((angleXYZ[1] != 0) ? (angleXYZ[1] / 2) * temp + angleAverageXYZ[1] : 0f),
+                    originalRotation.z + ((angleXYZ[2] != 0) ? (angleXYZ[2] / 2) * temp + angleAverageXYZ[2] : 0f)
                 );
 
                 if (timeRatio == 1)
