@@ -74,7 +74,7 @@ namespace KRaB.Split.Enemy
             }
             else if (colTransform.gameObject.tag == "Player")
             {
-                player.DamagePlayer(damage);
+                player.Damage(damage);
             }
         }
 

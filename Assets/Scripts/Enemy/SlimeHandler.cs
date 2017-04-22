@@ -124,7 +124,7 @@ namespace KRaB.Split.Enemy
             if (!isCurve && Time.time > damageTime) {
                 if (collision.gameObject.GetComponent<Transform>().tag == "Player")
                 {
-                    player.DamagePlayer(damage);
+                    player.Damage(damage);
                     damageTime = Time.time + damageDelay.RandomInRange;
                 }
             }
@@ -135,7 +135,7 @@ namespace KRaB.Split.Enemy
             {
                 if (collision.gameObject.GetComponent<Transform>().tag == "Player")
                 {
-                    player.DamagePlayer(damage);
+                    player.Damage(damage);
                     damageTime = Time.time + damageDelay.RandomInRange;
                 }
             }
