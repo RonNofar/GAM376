@@ -31,7 +31,8 @@ namespace KRaB.Split.Util
                     new Vector2(
                         0f,
                         force * Time.deltaTime * (upward ? 1 : -1) + -Physics2D.gravity.y
-                    )
+                    ),
+                    ForceMode2D.Force
                 );
             }
         }
