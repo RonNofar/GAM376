@@ -51,13 +51,9 @@ namespace KRaB.Split.Enemy
 
         private float delayTime = 0f;
         private bool isBounce = false;
-<<<<<<< HEAD
         private new AudioSource audio;
-=======
         [SerializeField]
         private Environment.SoundGroup button;
-        private AudioSource audio;
->>>>>>> origin/feature/SlimeJump
 
         // Use this for initialization
         protected override void Start()
