@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KRaB.Enemy.Color
+namespace KRaB.Enemy.Colors
 {
     [CreateAssetMenu(order = 12)]
     public class CompositeColor : EnemyColor

@@ -15,7 +15,7 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private GameObject enemy;
         [SerializeField]
-        private KRaB.Enemy.Color.EnemyColor[] possibleSpawns;
+        private KRaB.Enemy.Colors.EnemyColor[] possibleSpawns;
 
         [Header("Runtime Linking", order = 101)]
         [SerializeField]
@@ -65,7 +65,7 @@ namespace KRaB.Split.Enemy
             {
                 if (parent.spawn)
                 {
-                    KRaB.Enemy.Color.EnemyColor m = possibleSpawns[Random.Range(0, possibleSpawns.Length)];
+                    KRaB.Enemy.Colors.EnemyColor m = possibleSpawns[Random.Range(0, possibleSpawns.Length)];
                     GameObject temp = Instantiate(enemy);
                     temp.GetComponent<Slime>().ColorData = m;
                     temp.transform.position = transform.position;

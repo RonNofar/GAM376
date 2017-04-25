@@ -48,7 +48,7 @@ namespace KRaB.Split.Util
         [SerializeField]
         private GameObject targetSpritePrefab;
         [SerializeField]
-        private KRaB.Enemy.Color.PrimaryColor color;
+        private KRaB.Enemy.Colors.PrimaryColor color;
 
         private Transform myTransform;
         private Transform toFollow;
@@ -202,7 +202,7 @@ namespace KRaB.Split.Util
             isDoneGrabbing = true;
         }
 
-        public void SetColor(KRaB.Enemy.Color.PrimaryColor c)
+        public void SetColor(KRaB.Enemy.Colors.PrimaryColor c)
         {
             color = c;
         }
@@ -219,7 +219,7 @@ namespace KRaB.Split.Util
             if ((s.ColorData == color))
             {
                 audio[0].Play();
-                KRaB.Enemy.Color.EnemyColor c = s.ColorData - color;
+                KRaB.Enemy.Colors.EnemyColor c = s.ColorData - color;
                 if (c == (MonoBehaviour)null)
                 {
                     Destroy(obj);

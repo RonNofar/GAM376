@@ -8,8 +8,8 @@ namespace KRaB.Split.Enemy
     public class Slime : Enemy, ColoredObject
     {
         [SerializeField]
-        private KRaB.Enemy.Color.EnemyColor colorData;
-        public KRaB.Enemy.Color.EnemyColor ColorData
+        private KRaB.Enemy.Colors.EnemyColor colorData;
+        public KRaB.Enemy.Colors.EnemyColor ColorData
         {
             get { return colorData; }
             set

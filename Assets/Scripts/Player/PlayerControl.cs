@@ -2,7 +2,6 @@
 using System.Collections;
 using KRaB.Split.UI;
 using KRaB.Split.Util;
-using KRaB.Split.Player;
 
 namespace KRaB.Split.Player
 {
@@ -123,7 +122,7 @@ namespace KRaB.Split.Player
         private new AudioSource audio;
 
         [SerializeField]
-        private KRaB.Enemy.Color.PrimaryColor[] orbColors;
+        private KRaB.Enemy.Colors.PrimaryColor[] orbColors;
 
         protected override void Awake()
         {
@@ -408,7 +407,7 @@ namespace KRaB.Split.Player
             Destroy(toDestroy);
         }
 
-        public KRaB.Enemy.Color.PrimaryColor[] GetOrbArray()
+        public KRaB.Enemy.Colors.PrimaryColor[] GetOrbArray()
         {
             return orbColors;
         }
@@ -418,7 +417,7 @@ namespace KRaB.Split.Player
             int l = orbColors.Length;
             if (direction > 0)
             { // next
-                KRaB.Enemy.Color.PrimaryColor temp = orbColors[0]; // first
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[0]; // first
                 for (int i = 0; i < l; ++i)
                 {
                     if (i <= l - 2)
@@ -434,7 +433,7 @@ namespace KRaB.Split.Player
             }
             else if (direction < 0)
             { // previous
-                KRaB.Enemy.Color.PrimaryColor temp = orbColors[l - 1]; // last
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[l - 1]; // last
                 for (int i = l - 1; i >= 0; --i)
                 {
                     if (i > 0)
@@ -456,7 +455,7 @@ namespace KRaB.Split.Player
             UpdateBucketColor(orbColors[0]);
         }
 
-        public void UpdateBucketColor(KRaB.Enemy.Color.PrimaryColor color)
+        public void UpdateBucketColor(KRaB.Enemy.Colors.PrimaryColor color)
         {
             bucketSR.color = color.color;
             bucketScript.SetColor(color);
