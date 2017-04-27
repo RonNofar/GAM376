@@ -28,11 +28,11 @@ namespace KRaB.Split.UI
 
         public void UpdateOrbs(Player.PlayerControl player)
         {
-            ColorManager.eColors[] orbs = player.GetOrbArray();
+            KRaB.Enemy.Colors.PrimaryColor [] orbs = player.GetOrbArray();
             int l = orbs.Length;
-            mainOrb.color = ColorManager.GetColor(orbs[0]);
-            prevOrb.color = ColorManager.GetColor(orbs[l - 1]);
-            nextOrb.color = ColorManager.GetColor(orbs[1]);
+            mainOrb.color = orbs[0].color;
+            prevOrb.color = orbs[l - 1].color;
+            nextOrb.color = orbs[1].color;
         }
     }
 }

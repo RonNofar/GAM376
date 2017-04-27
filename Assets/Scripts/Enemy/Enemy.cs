@@ -9,7 +9,7 @@ namespace KRaB.Split.Enemy
 
         [Header("Runtime Linking", order = 101)]
         [SerializeField]
-        protected AIMaster parent;
+        private AIMaster parent;
         public AIMaster Parent
         {
             get { return parent; }
@@ -38,8 +38,9 @@ namespace KRaB.Split.Enemy
         protected bool tossed { get; private set; }
 
         protected virtual void OnDestroy()
-        {
-            parent.deregister(this);
+        { 
+            if(Parent!=null)
+                parent.deregister(this);
         }
 
 

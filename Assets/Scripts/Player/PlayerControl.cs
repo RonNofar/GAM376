@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 using KRaB.Split.UI;
 using KRaB.Split.Util;
-using KRaB.Split.Player;
 
 namespace KRaB.Split.Player
 {
@@ -138,12 +137,8 @@ namespace KRaB.Split.Player
 
         private new AudioSource audio;
 
-        private ColorManager.eColors[] orbColors =
-        { // 0 -> current, 1 -> next, last -> prev
-            ColorManager.eColors.Blue,
-            ColorManager.eColors.Red,
-            ColorManager.eColors.Yellow
-        };
+        [SerializeField]
+        private KRaB.Enemy.Colors.PrimaryColor[] orbColors;
 
         protected override void Awake()
         {
@@ -258,7 +253,7 @@ namespace KRaB.Split.Player
             }
             if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button5))
             { // next orb (>>)
-                if (orbColors[1] != ColorManager.eColors.Black)
+                if (orbColors[1] != null)
                 {
                     RotateOrbColors(1);
                 }
@@ -266,7 +261,7 @@ namespace KRaB.Split.Player
             //Debug.Log(Input.GetAxis("ShiftLeft"));
             if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Joystick1Button4))
             { // previous orb (<<)
-                if (orbColors[orbColors.Length - 1] != ColorManager.eColors.Black)
+                if (orbColors[orbColors.Length - 1] != null)
                 {
                     RotateOrbColors(-1);
                 }
@@ -427,43 +422,13 @@ namespace KRaB.Split.Player
             //toShovel.GetComponent<Rigidbody2D>().AddForce(new Vector2(facingRight ? 12f : -12f, 25), ForceMode2D.Impulse);
         }
 
-        void Attack()
-        {
-            // spawn sprite of slash with collider on side of player using facingRight
-            // Figure out color coordination, probably better to hardcode everything
-            isSlash = true;
-            int isRight = (facingRight ? 1 : -1);
-            myPosition = myTransform.position;
-            GameObject newSlash = Instantiate(slashPrefab);
-            Transform slashTransform = newSlash.GetComponent<Transform>();
-            Rigidbody2D slashRigidbody = newSlash.GetComponent<Rigidbody2D>();
-            slashTransform.localPosition = myPosition + new Vector3(slashDistance.RandomInRange, 0f) * isRight;
-            slashTransform.localScale = new Vector3(
-                slashTransform.localScale.x * isRight,
-                slashTransform.localScale.y
-            );
-            slashTransform.localRotation = new Quaternion(
-                slashTransform.rotation.x,
-                slashTransform.rotation.y,
-                slashTransform.rotation.z + slashAngle.RandomInRange,
-                slashTransform.rotation.w
-            );
-            slashRigidbody.AddForce(
-                new Vector2(
-                    slashForce.RandomInRange * isRight,
-                    0f),
-                ForceMode2D.Impulse);
-            newSlash.GetComponent<SlashHandler>().Color = (orbColors[0]);
-            StartCoroutine(DestroyAfterSecs(newSlash, slashLife));
-        }
-
         IEnumerator DestroyAfterSecs(GameObject toDestroy, float secs)
         {
             yield return new WaitForSeconds(secs);
             Destroy(toDestroy);
         }
 
-        public ColorManager.eColors[] GetOrbArray()
+        public KRaB.Enemy.Colors.PrimaryColor[] GetOrbArray()
         {
             return orbColors;
         }
@@ -473,7 +438,7 @@ namespace KRaB.Split.Player
             int l = orbColors.Length;
             if (direction > 0)
             { // next
-                ColorManager.eColors temp = orbColors[0]; // first
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[0]; // first
                 for (int i = 0; i < l; ++i)
                 {
                     if (i <= l - 2)
@@ -489,7 +454,7 @@ namespace KRaB.Split.Player
             }
             else if (direction < 0)
             { // previous
-                ColorManager.eColors temp = orbColors[l - 1]; // last
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[l - 1]; // last
                 for (int i = l - 1; i >= 0; --i)
                 {
                     if (i > 0)
@@ -511,9 +476,9 @@ namespace KRaB.Split.Player
             UpdateBucketColor(orbColors[0]);
         }
 
-        public void UpdateBucketColor(ColorManager.eColors color)
+        public void UpdateBucketColor(KRaB.Enemy.Colors.PrimaryColor color)
         {
-            bucketSR.color = ColorManager.GetColor(color);
+            bucketSR.color = color.color;
             bucketScript.SetColor(color);
         }
 
