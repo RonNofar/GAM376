@@ -108,7 +108,9 @@ namespace KRaB.Split.Player
         [SerializeField]
         private float flashTime = 0.1f;
         [SerializeField]
-        private Color flashColor = Color.red;
+        private Color damageColor = Color.red;
+        [SerializeField]
+        private Color healColor = Color.green;
         [SerializeField]
         private float flashDampner = 100f;
         [SerializeField]
@@ -509,7 +511,11 @@ namespace KRaB.Split.Player
             else
             {
                 if (lastRoutine != null) StopCoroutine(lastRoutine);
-                lastRoutine = StartCoroutine(DamageFlash());
+                lastRoutine = StartCoroutine(Flash(
+                    sprites,
+                    damageColor,
+                    flashTime)
+                );
                 StartCoroutine(HealthChange(-damage));
                 currentHealth -= damage;
                 audio.Play();
@@ -518,6 +524,12 @@ namespace KRaB.Split.Player
 
         public void Heal(float amount)
         {
+            if (lastRoutine != null) StopCoroutine(lastRoutine);
+            lastRoutine = StartCoroutine(Flash(
+                sprites,
+                healColor,
+                flashTime)
+            );
             float temp = currentHealth + amount;
             if (temp >= maxHealth)
             {
@@ -526,6 +538,12 @@ namespace KRaB.Split.Player
             }
             else
             {
+                if (lastRoutine != null) StopCoroutine(lastRoutine);
+                lastRoutine = StartCoroutine(Flash(
+                    sprites,
+                    healColor,
+                    flashTime)
+                );
                 currentHealth = temp;
                 StartCoroutine(HealthChange(amount));
             }
@@ -568,27 +586,30 @@ namespace KRaB.Split.Player
             Destroy(canvas);
         }
 
-        IEnumerator DamageFlash()
+        IEnumerator Flash(SpriteRenderer[] sprites, Color color, float totalTime)
         {
             float d_startTime = Time.time;
             float d_timeRatio = 0f;
 
             for (int i = 0; i < sprites.Length; ++i)
             {
-                sprites[i].color = flashColor;
+                sprites[i].color = color;
             }
 
             while (d_timeRatio < 1)
             {
-                d_timeRatio = (Time.time - d_startTime) / flashTime;
+                d_timeRatio = (Time.time - d_startTime) / totalTime;
                 if (d_timeRatio >= 1) d_timeRatio = 1;
 
                 // Do something with d_timeRatio here
-                float temp = 1-(1 / (d_timeRatio + 1 / flashDampner) / flashDampner);
                 for (int i = 0; i < sprites.Length; ++i)
                 {
                     //Debug.Log(temp);
-                    sprites[i].color = Color.Lerp(flashColor,orgSpritesColor[i],temp);
+                    sprites[i].color = Color.Lerp(
+                        color,
+                        orgSpritesColor[i], 
+                        1 - (1 / (d_timeRatio + 1 / flashDampner) / flashDampner)
+                    );
                 }
 
                 if (d_timeRatio == 1)
