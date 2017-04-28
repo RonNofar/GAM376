@@ -26451,6 +26451,7 @@ MonoBehaviour:
     max: 0
   SpawnerPrefab: {fileID: 1856321804102578, guid: b7287a24858ba484995d72c0c86c3426,
     type: 2}
+  active: []
   maxSpawns: 3
 --- !u!114 &3921
 MonoBehaviour:
@@ -37355,6 +37356,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11400002, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: orbColors.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 400020, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
       propertyPath: m_LocalPosition.x
       value: -59
@@ -37530,6 +37535,14 @@ Prefab:
       propertyPath: audio
       value: 
       objectReference: {fileID: 503579746}
+    - target: {fileID: 11400002, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: shovelLife
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
+      propertyPath: shovelDelay
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6aa187bc6339843479c03fdfd71404a3, type: 2}
   m_IsPrefabParent: 0

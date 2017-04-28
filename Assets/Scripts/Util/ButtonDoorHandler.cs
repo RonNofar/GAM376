@@ -46,12 +46,12 @@ namespace KRaB.Split.Util
             if (isOpening)
             {
                 // Open
-                Debug.Log("Time.time: " + Time.time + " | startTime: " + startTime + " | timeRatio: " + timeRatio);
+                //Debug.Log("Time.time: " + Time.time + " | startTime: " + startTime + " | timeRatio: " + timeRatio);
                 timeRatio = (Time.time - startTime) / totalTime;
-                Debug.Log(timeRatio);
+                //Debug.Log(timeRatio);
 
                 timeRatio = (timeRatio > 1) ? 1f : timeRatio;
-                Debug.Log(timeRatio);
+                //Debug.Log(timeRatio);
                 myTransform.position = Vector3.Lerp(originalPosition, donePosition, timeRatio);
                 if (timeRatio == 1) isOpening = false;
             }
