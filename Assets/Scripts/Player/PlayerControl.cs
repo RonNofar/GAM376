@@ -225,18 +225,9 @@ namespace KRaB.Split.Player
             halo.SetActive(false);
             spawnPosition = myTransform.position;
             audio = GetComponent<AudioSource>();
-<<<<<<< HEAD
-=======
-            sprites = GetComponentsInChildren<SpriteRenderer>(true);
-            orgSpritesColor = new Color[sprites.Length];
-            for (int i = 0; i < sprites.Length; ++i)
-            {
-                orgSpritesColor[i] = sprites[i].color;
-            }
             gravestoneFinal = gravestone.transform.localPosition;
             gravestone.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
             gravestone.transform.localPosition = gravestoneStart;
->>>>>>> feature/FinalRelease
         }
         #endregion
 
@@ -282,7 +273,7 @@ namespace KRaB.Split.Player
             if (Input.GetKeyDown(KeyCode.P))
             {
                 Debug.Log("P");
-                Invisible(false);
+                anim.SetBool("Invisible", true);
             }
         }
 
@@ -363,7 +354,7 @@ namespace KRaB.Split.Player
                 if (timeRatio == 1)
                 {
                     Debug.Log("timeRatio = 1");
-                    Invisible(false);
+                    anim.SetBool("Invisible",true);
                     gravestone.transform.localPosition = gravestoneFinal;
                     if (Time.time > startTime + delay)
                     {
@@ -384,7 +375,7 @@ namespace KRaB.Split.Player
             Debug.Log("In Revive | isDead="+isDead );
             if (!isReviveSequence)
             {
-                Invisible(true);
+                anim.SetBool("Invisible", false);
                 currentHealth = maxHealth;
                 isDead = false;
                 myTransform.position = spawnPosition;
@@ -585,17 +576,6 @@ namespace KRaB.Split.Player
             }
             else
             {
-<<<<<<< HEAD
-                StartCoroutine(HealthChange(-damage));
-=======
-                if (lastRoutine != null) StopCoroutine(lastRoutine);
-                lastRoutine = StartCoroutine(Flash(
-                    sprites,
-                    damageColor,
-                    flashTime)
-                );
-                //StartCoroutine(HealthChange(-damage));
->>>>>>> feature/FinalRelease
                 currentHealth -= damage;
                 audio.Play();
             }
@@ -672,21 +652,6 @@ namespace KRaB.Split.Player
                 }
 
                 yield return null;
-            }
-        }
-
-        void Invisible(bool state)
-        {
-            if (lastRoutine != null) StopCoroutine(lastRoutine);
-            for (int i = 0; i < sprites.Length; ++i)
-            {
-                if (sprites[i].gameObject.name != gravestone.gameObject.name)
-                {
-                    Color temp = sprites[i].color;
-                    temp.a = state ? 1 : 0;
-                    sprites[i].color = temp;
-                }
-                
             }
         }
     }
