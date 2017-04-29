@@ -50,7 +50,9 @@ namespace KRaB.Split.UI
         }
         private void CreditsButton()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            //UnityEngine.SceneManagement.SceneManager.LoadScene(1);
+            Manager.GameMaster.Instance.gameObject.GetComponent<AudioSource>().Play();
+            Manager.GameMaster.Instance.gameState = Manager.GameMaster.GameState.Credits;
         }
         private void ExitButton()
         {

@@ -48,7 +48,8 @@ namespace KRaB.Split.Manager
             MainMenu,
             InGame,
             Paused,
-            GameOver
+            GameOver,
+            Credits
         }
 
         private GameState currentState;
