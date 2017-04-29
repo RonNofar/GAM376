@@ -581,7 +581,7 @@ namespace KRaB.Split.Player
         {
             if (currentHealth - damage <= 0)
             {
-                StartCoroutine(HealthChange(0 - currentHealth));
+                //StartCoroutine(HealthChange(0 - currentHealth));
                 currentHealth = 0f;
                 Death();
             }

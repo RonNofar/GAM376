@@ -24742,7 +24742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toSpawn: {fileID: 1276268041640336, guid: b275749a672b8ca47b803b80101d8c04, type: 2}
   numberOfSpawns: 20
-  versionString: v0.2.0
+  versionString: v0.3.0
   versionText: {fileID: 3886}
   winCollider: {fileID: 2532}
   winText: {fileID: 3888}
