@@ -13,6 +13,8 @@ namespace KRaB.Split.Manager
         private GameObject pauseMenuCanvas;
         [SerializeField]
         private GameObject inGameCanvas;
+        [SerializeField]
+        private GameObject creditsCanvas;
 
         private GameMaster.GameState lastState = 
             GameMaster.GameState.none;
@@ -22,6 +24,8 @@ namespace KRaB.Split.Manager
         {
             mainMenuCanvas.SetActive(false);
             pauseMenuCanvas.SetActive(false);
+            inGameCanvas.SetActive(false);
+            creditsCanvas.SetActive(false);
         }
 
         // Update is called once per frame
@@ -46,7 +50,8 @@ namespace KRaB.Split.Manager
                             false,
                             new GameObject[] {
                                 pauseMenuCanvas,
-                                inGameCanvas
+                                inGameCanvas,
+                                creditsCanvas
                             });
                         mainMenuCanvas.SetActive(true);
                         break;
@@ -55,7 +60,8 @@ namespace KRaB.Split.Manager
                             false,
                             new GameObject[] {
                                 mainMenuCanvas,
-                                inGameCanvas
+                                inGameCanvas,
+                                creditsCanvas
                             });
                         pauseMenuCanvas.SetActive(true);
                         break;
@@ -64,9 +70,21 @@ namespace KRaB.Split.Manager
                             false,
                             new GameObject[] {
                                 mainMenuCanvas,
-                                pauseMenuCanvas
+                                pauseMenuCanvas,
+                                creditsCanvas
                             });
                         inGameCanvas.SetActive(true);
+                        break;
+                    case GameMaster.GameState.Credits:
+                        SetArrayToActiveState(
+                            false,
+                            new GameObject[]
+                            {
+                                mainMenuCanvas,
+                                pauseMenuCanvas,
+                                inGameCanvas
+                            });
+                        creditsCanvas.SetActive(true);
                         break;
                 }
             }

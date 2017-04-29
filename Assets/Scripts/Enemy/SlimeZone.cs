@@ -23,7 +23,7 @@ namespace KRaB.Split.Enemy
 
         protected virtual void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log("Enter");
+            //Debug.Log("Enter");
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             if(e!=null)
                 e.Zone = this;
@@ -32,7 +32,7 @@ namespace KRaB.Split.Enemy
         }
         protected virtual void OnTriggerExit2D(Collider2D collision)
         {
-            Debug.Log("Leave");
+            //Debug.Log("Leave");
             Enemy e = collision.gameObject.GetComponent<Enemy>();
             if (e == null) return;
             if(e.Zone == this)

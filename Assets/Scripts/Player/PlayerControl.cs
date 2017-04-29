@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.UI;
 using KRaB.Split.UI;
 using KRaB.Split.Util;
-using KRaB.Split.Player;
 
 namespace KRaB.Split.Player
 {
@@ -21,8 +20,6 @@ namespace KRaB.Split.Player
         private float minimumHeight = -100f;
         [SerializeField]
         private float maxVelocity = 20f;
-        [HideInInspector]
-        public bool isDead = false;
         
         private Transform myTransform;
         private Rigidbody2D myRigidbody;
@@ -32,6 +29,8 @@ namespace KRaB.Split.Player
         //public ColorManager.eColors color = ColorManager.eColors.Blue;
         [SerializeField]
         private OrbUIHandler orbUI;
+        [SerializeField]
+        private KRaB.Enemy.Colors.PrimaryColor[] orbColors;
 
         [Header("Bucket Variables")]
         [SerializeField]
@@ -66,23 +65,6 @@ namespace KRaB.Split.Player
         private float distance = 5f;
         private bool isShovelCurve = false;
 
-        [Header("Slash Variable")]
-        [SerializeField]
-        private GameObject slashPrefab;
-        [SerializeField]
-        private float slashLife = 1f;
-        [SerializeField]
-        private float slashDelay = 0.1f;
-        [SerializeField]
-        private RTool.FloatRange slashForce;
-        [SerializeField]
-        private RTool.FloatRange slashDistance;
-        [SerializeField]
-        private RTool.FloatRange slashScale;
-        [SerializeField]
-        private RTool.FloatRange slashAngle;
-
-        private bool isSlash = false;
         private float currTime = 0f;
 
         [Header("Revive")]
@@ -120,11 +102,13 @@ namespace KRaB.Split.Player
 
         [Header("Damage")]
         [SerializeField]
-        private SpriteRenderer[] sprites;
-        [SerializeField]
         private float flashTime = 0.1f;
         [SerializeField]
-        private Color flashColor = Color.red;
+        private Color damageColor = Color.red;
+        [SerializeField]
+        private Color healColor = Color.green;
+        [SerializeField]
+        private float flashDampner = 100f;
         [SerializeField]
         private float HealthChangeTime = 2f;
         [SerializeField]
@@ -136,14 +120,21 @@ namespace KRaB.Split.Player
         [SerializeField]
         private Transform HealthChangeStartTransform;
 
-        private new AudioSource audio;
+        [Header("Death")]
+        [SerializeField]
+        private GameObject gravestone; // gravestone object on character to interact with
+        [SerializeField]
+        private Vector2 gravestoneStart; // an vec3 referencing where the gravestone will start
+        [SerializeField]
+        private float gravestoneTime; // total time it takes for gravestone to fall
+        [SerializeField]
+        private float deathDelay; // amount of time before end of death delay
 
-        private ColorManager.eColors[] orbColors =
-        { // 0 -> current, 1 -> next, last -> prev
-            ColorManager.eColors.Blue,
-            ColorManager.eColors.Red,
-            ColorManager.eColors.Yellow
-        };
+        private Vector2 gravestoneFinal; // original position of the gravestone
+
+        private bool isStartFlashing = false;
+
+        private new AudioSource audio;
 
         protected override void Awake()
         {
@@ -234,6 +225,9 @@ namespace KRaB.Split.Player
             halo.SetActive(false);
             spawnPosition = myTransform.position;
             audio = GetComponent<AudioSource>();
+            gravestoneFinal = gravestone.transform.localPosition;
+            gravestone.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
+            gravestone.transform.localPosition = gravestoneStart;
         }
         #endregion
 
@@ -258,7 +252,7 @@ namespace KRaB.Split.Player
             }
             if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Joystick1Button5))
             { // next orb (>>)
-                if (orbColors[1] != ColorManager.eColors.Black)
+                if (orbColors[1] != null)
                 {
                     RotateOrbColors(1);
                 }
@@ -266,7 +260,7 @@ namespace KRaB.Split.Player
             //Debug.Log(Input.GetAxis("ShiftLeft"));
             if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Joystick1Button4))
             { // previous orb (<<)
-                if (orbColors[orbColors.Length - 1] != ColorManager.eColors.Black)
+                if (orbColors[orbColors.Length - 1] != null)
                 {
                     RotateOrbColors(-1);
                 }
@@ -276,6 +270,11 @@ namespace KRaB.Split.Player
                 isRevive = true;
             }
             CheckForDeath();
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Debug.Log("P");
+                anim.SetBool("Invisible", true);
+            }
         }
 
         protected override void FixedUpdate()
@@ -302,42 +301,100 @@ namespace KRaB.Split.Player
 
         void CheckForDeath()
         { // to be called in update
-            if (myTransform.position.y <= minimumHeight) Death();
+            if (myTransform.position.y <= minimumHeight)
+            {
+                ZeroVelocity();
+                Death();
+            }
         }
         
         public void Death()
         { // is called in method called in update
             if (!isDead)
             {
-                currentHealth = 0f;
                 isDead = true;
-                // death animation here
+                currentHealth = 0f;
+                
+                StartCoroutine(DeathAnimation(
+                    deathDelay, 
+                    () => {
+                        Debug.Log("isRevive = true");
+                        isRevive = true;
+                    })
+                );
+
+                /*
                 StartCoroutine(
                     RTool.WaitAndRunAction(
                         reviveDelay,
                         () => { isRevive = true; }
                     )
                 );
+                */
+            }
+        }
+
+        private IEnumerator DeathAnimation(float delay, UnityEngine.Events.UnityAction action)
+        {
+            Debug.Log("In DeathAnimation");
+            gravestone.transform.localPosition = gravestoneStart;
+            float startTime = Time.time;
+            float timeRatio = 0f;
+
+            gravestone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+
+            while (timeRatio <= 1)
+            {
+                timeRatio = (Time.time - startTime) / gravestoneTime;
+                if (timeRatio > 1) timeRatio = 1;
+
+                float temp = (1 / timeRatio) - 1;
+                gravestone.transform.localPosition = Vector2.Lerp(gravestoneStart, gravestoneFinal, timeRatio);
+
+                if (timeRatio == 1)
+                {
+                    Debug.Log("timeRatio = 1");
+                    anim.SetBool("Invisible",true);
+                    gravestone.transform.localPosition = gravestoneFinal;
+                    if (Time.time > startTime + delay)
+                    {
+                        Debug.Log("Time delat met");
+                        gravestone.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+                        gravestone.transform.localPosition = gravestoneStart;
+                        action.Invoke();
+                        break;
+                    }
+                }
+
+                yield return null;
             }
         }
 
         public void Revive()
         {
+            Debug.Log("In Revive | isDead="+isDead );
             if (!isReviveSequence)
             {
+                anim.SetBool("Invisible", false);
+                currentHealth = maxHealth;
                 isDead = false;
                 myTransform.position = spawnPosition;
                 ZeroVelocity();
                 reviveStartTime = Time.time;
-                isReviveSequence = true;
+                /*RTool.WaitAndRunAction(1f,
+                    () =>
+                    {*/
+                        isReviveSequence = true;
 
-                currentHealth = maxHealth;
+                        currentHealth = maxHealth;
 
-                GetComponent<Collider2D>().enabled = false;
+                        GetComponent<Collider2D>().enabled = false;
 
-                leftWing.SetActive(true);
-                rightWing.SetActive(true);
-                halo.SetActive(true);
+                        leftWing.SetActive(true);
+                        rightWing.SetActive(true);
+                        halo.SetActive(true);/*
+                    }
+                );*/
             }
             else
             {
@@ -363,6 +420,7 @@ namespace KRaB.Split.Player
                 );
                 if (reviveTimeRatio >= 1)
                 {
+                    isDead = false;
                     isRevive = false;
                     isReviveSequence = false;
 
@@ -427,43 +485,13 @@ namespace KRaB.Split.Player
             //toShovel.GetComponent<Rigidbody2D>().AddForce(new Vector2(facingRight ? 12f : -12f, 25), ForceMode2D.Impulse);
         }
 
-        void Attack()
-        {
-            // spawn sprite of slash with collider on side of player using facingRight
-            // Figure out color coordination, probably better to hardcode everything
-            isSlash = true;
-            int isRight = (facingRight ? 1 : -1);
-            myPosition = myTransform.position;
-            GameObject newSlash = Instantiate(slashPrefab);
-            Transform slashTransform = newSlash.GetComponent<Transform>();
-            Rigidbody2D slashRigidbody = newSlash.GetComponent<Rigidbody2D>();
-            slashTransform.localPosition = myPosition + new Vector3(slashDistance.RandomInRange, 0f) * isRight;
-            slashTransform.localScale = new Vector3(
-                slashTransform.localScale.x * isRight,
-                slashTransform.localScale.y
-            );
-            slashTransform.localRotation = new Quaternion(
-                slashTransform.rotation.x,
-                slashTransform.rotation.y,
-                slashTransform.rotation.z + slashAngle.RandomInRange,
-                slashTransform.rotation.w
-            );
-            slashRigidbody.AddForce(
-                new Vector2(
-                    slashForce.RandomInRange * isRight,
-                    0f),
-                ForceMode2D.Impulse);
-            newSlash.GetComponent<SlashHandler>().Color = (orbColors[0]);
-            StartCoroutine(DestroyAfterSecs(newSlash, slashLife));
-        }
-
         IEnumerator DestroyAfterSecs(GameObject toDestroy, float secs)
         {
             yield return new WaitForSeconds(secs);
             Destroy(toDestroy);
         }
 
-        public ColorManager.eColors[] GetOrbArray()
+        public KRaB.Enemy.Colors.PrimaryColor[] GetOrbArray()
         {
             return orbColors;
         }
@@ -473,7 +501,7 @@ namespace KRaB.Split.Player
             int l = orbColors.Length;
             if (direction > 0)
             { // next
-                ColorManager.eColors temp = orbColors[0]; // first
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[0]; // first
                 for (int i = 0; i < l; ++i)
                 {
                     if (i <= l - 2)
@@ -489,7 +517,7 @@ namespace KRaB.Split.Player
             }
             else if (direction < 0)
             { // previous
-                ColorManager.eColors temp = orbColors[l - 1]; // last
+                KRaB.Enemy.Colors.PrimaryColor temp = orbColors[l - 1]; // last
                 for (int i = l - 1; i >= 0; --i)
                 {
                     if (i > 0)
@@ -511,9 +539,9 @@ namespace KRaB.Split.Player
             UpdateBucketColor(orbColors[0]);
         }
 
-        public void UpdateBucketColor(ColorManager.eColors color)
+        public void UpdateBucketColor(KRaB.Enemy.Colors.PrimaryColor color)
         {
-            bucketSR.color = ColorManager.GetColor(color);
+            bucketSR.color = color.color;
             bucketScript.SetColor(color);
         }
 
@@ -539,44 +567,33 @@ namespace KRaB.Split.Player
 
         public void Damage(float damage)
         {
+            anim.SetTrigger("Damaged");
             if (currentHealth - damage <= 0)
             {
-                StartCoroutine(HealthChange(0 - currentHealth));
+                //StartCoroutine(HealthChange(0 - currentHealth));
                 currentHealth = 0f;
                 Death();
             }
             else
             {
-                StartCoroutine(HealthChange(-damage));
                 currentHealth -= damage;
                 audio.Play();
-                Color[] orgColor = new Color[sprites.Length];
-                for (int i = 0; i < sprites.Length; ++i)
-                {
-                    orgColor[i] = sprites[i].color;
-                    sprites[i].color = flashColor;
-                }
-                RTool.WaitAndRunAction(flashTime, () => {
-                    for (int i = 0; i < sprites.Length; ++i)
-                    {
-                        sprites[i].color = orgColor[i];
-                    }
-                });
             }
         }
 
         public void Heal(float amount)
         {
+            anim.SetTrigger("Healed");
             float temp = currentHealth + amount;
             if (temp >= maxHealth)
             {
-                StartCoroutine(HealthChange(maxHealth - currentHealth));
+                //StartCoroutine(HealthChange(maxHealth - currentHealth));
                 currentHealth = maxHealth;
             }
             else
             {
                 currentHealth = temp;
-                StartCoroutine(HealthChange(amount));
+                //StartCoroutine(HealthChange(amount));
             }
         }
 
@@ -587,6 +604,7 @@ namespace KRaB.Split.Player
 
         private IEnumerator HealthChange(float amount)
         {
+            isStartFlashing = false;
             float startTime = Time.time;
             float timeRatio = 0f;
             bool coroutineStarted = false;
@@ -598,6 +616,7 @@ namespace KRaB.Split.Player
 
             while (timeRatio < 1)
             {
+                if (isStartFlashing) break;
                 timeRatio = (Time.time - startTime) / HealthChangeTime;
                 if (Time.time >= startTime + HealthChangeFadeTime && !coroutineStarted)
                 {
@@ -614,7 +633,7 @@ namespace KRaB.Split.Player
             }
             Destroy(canvas);
         }
-
+        
         IEnumerator fadeOut(CanvasRenderer cr)
         {
             float f_startTime = Time.time;
@@ -625,7 +644,7 @@ namespace KRaB.Split.Player
                 f_timeRatio = (Time.time - f_startTime) / HealthChangeFadeTime;
                 if (f_timeRatio >= 1) f_timeRatio = 1;
 
-                Debug.Log(f_timeRatio);
+                //Debug.Log(f_timeRatio);
                 cr.GetComponent<CanvasRenderer>().SetAlpha(1-f_timeRatio);
                 if (f_timeRatio == 1)
                 {

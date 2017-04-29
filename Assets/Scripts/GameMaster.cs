@@ -48,7 +48,8 @@ namespace KRaB.Split.Manager
             MainMenu,
             InGame,
             Paused,
-            GameOver
+            GameOver,
+            Credits
         }
 
         private GameState currentState;
@@ -81,7 +82,7 @@ namespace KRaB.Split.Manager
 
         // Use this for initialization
         void Start() {
-            Debug.Log(savedState);
+            //Debug.Log(savedState);
             if (savedState != GameState.none)
             {
                 gameState = savedState; // << TO BE TAKEN OUT <<<
@@ -100,12 +101,6 @@ namespace KRaB.Split.Manager
         void Update() {
             if (Input.GetKeyDown(KeyCode.Equals))
             {
-                for (int i = 0; i < numberOfSpawns; ++i)
-                {
-                    GameObject o = Instantiate(toSpawn);
-                    o.GetComponent<Enemy.Slime>().Color =
-                            (Random.Range(0f, 1f) > 0.5f) ? UI.ColorManager.eColors.Blue : UI.ColorManager.eColors.Red;
-                }
             }
             if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Joystick1Button7))
             {

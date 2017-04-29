@@ -48,7 +48,13 @@ namespace KRaB.Split.Util
         [SerializeField]
         private GameObject targetSpritePrefab;
         [SerializeField]
-        private UI.ColorManager.eColors color = UI.ColorManager.eColors.Black;
+        private KRaB.Enemy.Colors.PrimaryColor color;
+
+        [Header("Health Drop")]
+        [SerializeField]
+        private GameObject healthDropPrefab;
+        [SerializeField]
+        private float healthDropRatio = 0.5f;
 
         private Transform myTransform;
         private Transform toFollow;
@@ -202,7 +208,7 @@ namespace KRaB.Split.Util
             isDoneGrabbing = true;
         }
 
-        public void SetColor(UI.ColorManager.eColors c)
+        public void SetColor(KRaB.Enemy.Colors.PrimaryColor c)
         {
             color = c;
         }
@@ -216,16 +222,21 @@ namespace KRaB.Split.Util
         {
             //if (!objs.Contains(obj)) objs.Add(obj);
             Enemy.Slime s = obj.GetComponent<Enemy.Slime>();
-            if (s.Color == color)
-            {
-                Destroy(obj);
-                audio[0].Play();
-                return;
-            }
-            else if (((int)s.Color & (int)color) != 0)
+            if ((s.ColorData == color))
             {
                 audio[0].Play();
-                s.Color ^= color;
+                KRaB.Enemy.Colors.EnemyColor c = s.ColorData - color;
+                if (c == (MonoBehaviour)null)
+                {
+                    if (!Manager.GameMaster.Instance.isQuitting)
+                    {
+                        if (Random.Range(0f, 1f) < healthDropRatio)
+                            Instantiate(healthDropPrefab, obj.GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+                    }
+                    Destroy(obj);
+                    return;
+                }
+                s.ColorData = c;
             }
             audio[1].Play();
             obj.GetComponent<Enemy.Slime>().ApplyRejectForce();

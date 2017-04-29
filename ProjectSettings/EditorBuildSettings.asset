@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Review#3.unity
   - enabled: 1
-    path: Assets/Scenes/Beta.unity
+    path: Assets/Scenes/FinalReview.unity
+  - enabled: 1
+    path: Assets/Scenes/Credits.unity

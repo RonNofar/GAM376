@@ -6,6 +6,8 @@ namespace External
     public class PlayerControl : MonoBehaviour
     {
         [HideInInspector]
+        public bool isDead = false;
+        [HideInInspector]
         public bool facingRight = true;         // For determining which way the player is currently facing.
         [HideInInspector]
         public bool jump = false;               // Condition for whether the player should jump.
@@ -13,7 +15,8 @@ namespace External
 
         public float moveForce = 365f;          // Amount of force added to move the player left and right.
         public float maxSpeed = 5f;             // The fastest the player can travel in the x axis.
-        public AudioClip[] jumpClips;           // Array of clips for when the player jumps.
+        public KRaB.Split.Environment.SoundGroup jumpSound;
+        public new AudioSource audio;
         public float jumpForce = 1000f;         // Amount of force added when the player jumps.
         public AudioClip[] taunts;              // Array of clips for when the player taunts.
         public float tauntProbability = 50f;    // Chance of a taunt happening.
@@ -22,6 +25,7 @@ namespace External
 
         private int tauntIndex;                 // The index of the taunts array indicating the most recent taunt.
         private Transform groundCheck;          // A position marking where to check if the player is grounded.
+        private Transform EXTRAgroundCheck;          // A position marking where to check if the player is grounded.
         private bool grounded = false;          // Whether or not the player is grounded.
         protected Animator anim;                  // Reference to the player's animator component.
 
@@ -30,6 +34,7 @@ namespace External
         {
             // Setting up references.
             groundCheck = transform.Find("groundCheck");
+            EXTRAgroundCheck = transform.Find("groundCheckEXTRA");
             anim = GetComponent<Animator>();
         }
 
@@ -38,7 +43,7 @@ namespace External
         {
             // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
             grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-
+            anim.SetBool("Grounded", Physics2D.Linecast(transform.position, EXTRAgroundCheck.position, 1 << LayerMask.NameToLayer("Ground")));
             // If the jump button is pressed and the player is grounded then the player should jump.
             if (Input.GetButtonDown("Jump") && grounded)
                 jump = true;
@@ -55,12 +60,12 @@ namespace External
             anim.SetFloat("Speed", Mathf.Abs(h));
 
             // If the player is changing direction (h has a different sign to velocity.x) or hasn't reached maxSpeed yet...
-            if (h * GetComponent<Rigidbody2D>().velocity.x < maxSpeed)
+            if (h * GetComponent<Rigidbody2D>().velocity.x < maxSpeed && !isDead)
                 // ... add a force to the player.
                 GetComponent<Rigidbody2D>().AddForce(Vector2.right * h * moveForce);
 
             // If the player's horizontal velocity is greater than the maxSpeed...
-            if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > maxSpeed)
+            if (Mathf.Abs(GetComponent<Rigidbody2D>().velocity.x) > maxSpeed && !isDead)
                 // ... set the player's velocity to the maxSpeed in the x axis.
                 GetComponent<Rigidbody2D>().velocity = new Vector2(Mathf.Sign(GetComponent<Rigidbody2D>().velocity.x) * maxSpeed, GetComponent<Rigidbody2D>().velocity.y);
 
@@ -80,8 +85,7 @@ namespace External
                 anim.SetTrigger("Jump");
 
                 // Play a random jump audio clip.
-                int i = Random.Range(0, jumpClips.Length);
-                AudioSource.PlayClipAtPoint(jumpClips[i], transform.position);
+                jumpSound.Play(audio);
 
                 // Add a vertical force to the player.
                 GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, jumpForce));
