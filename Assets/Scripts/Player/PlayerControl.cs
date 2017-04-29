@@ -20,8 +20,6 @@ namespace KRaB.Split.Player
         private float minimumHeight = -100f;
         [SerializeField]
         private float maxVelocity = 20f;
-        [HideInInspector]
-        public bool isDead = false;
         
         private Transform myTransform;
         private Rigidbody2D myRigidbody;
@@ -123,6 +121,18 @@ namespace KRaB.Split.Player
         private float HealthChangeFadeTime = 0.5f;
         [SerializeField]
         private Transform HealthChangeStartTransform;
+
+        [Header("Death")]
+        [SerializeField]
+        private GameObject gravestone; // gravestone object on character to interact with
+        [SerializeField]
+        private Vector2 gravestoneStart; // an vec3 referencing where the gravestone will start
+        [SerializeField]
+        private float gravestoneTime; // total time it takes for gravestone to fall
+        [SerializeField]
+        private float deathDelay; // amount of time before end of death delay
+
+        private Vector2 gravestoneFinal; // original position of the gravestone
 
         private bool isStartFlashing = false;
 
@@ -227,6 +237,9 @@ namespace KRaB.Split.Player
             {
                 orgSpritesColor[i] = sprites[i].color;
             }
+            gravestoneFinal = gravestone.transform.localPosition;
+            gravestone.GetComponent<SpriteRenderer>().color = new Color(0,0,0,0);
+            gravestone.transform.localPosition = gravestoneStart;
         }
         #endregion
 
@@ -269,6 +282,11 @@ namespace KRaB.Split.Player
                 isRevive = true;
             }
             CheckForDeath();
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                Debug.Log("P");
+                Invisible(false);
+            }
         }
 
         protected override void FixedUpdate()
@@ -295,42 +313,100 @@ namespace KRaB.Split.Player
 
         void CheckForDeath()
         { // to be called in update
-            if (myTransform.position.y <= minimumHeight) Death();
+            if (myTransform.position.y <= minimumHeight)
+            {
+                ZeroVelocity();
+                Death();
+            }
         }
         
         public void Death()
         { // is called in method called in update
             if (!isDead)
             {
-                currentHealth = 0f;
                 isDead = true;
-                // death animation here
+                currentHealth = 0f;
+                
+                StartCoroutine(DeathAnimation(
+                    deathDelay, 
+                    () => {
+                        Debug.Log("isRevive = true");
+                        isRevive = true;
+                    })
+                );
+
+                /*
                 StartCoroutine(
                     RTool.WaitAndRunAction(
                         reviveDelay,
                         () => { isRevive = true; }
                     )
                 );
+                */
+            }
+        }
+
+        private IEnumerator DeathAnimation(float delay, UnityEngine.Events.UnityAction action)
+        {
+            Debug.Log("In DeathAnimation");
+            gravestone.transform.localPosition = gravestoneStart;
+            float startTime = Time.time;
+            float timeRatio = 0f;
+
+            gravestone.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+
+            while (timeRatio <= 1)
+            {
+                timeRatio = (Time.time - startTime) / gravestoneTime;
+                if (timeRatio > 1) timeRatio = 1;
+
+                float temp = (1 / timeRatio) - 1;
+                gravestone.transform.localPosition = Vector2.Lerp(gravestoneStart, gravestoneFinal, timeRatio);
+
+                if (timeRatio == 1)
+                {
+                    Debug.Log("timeRatio = 1");
+                    Invisible(false);
+                    gravestone.transform.localPosition = gravestoneFinal;
+                    if (Time.time > startTime + delay)
+                    {
+                        Debug.Log("Time delat met");
+                        gravestone.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 0);
+                        gravestone.transform.localPosition = gravestoneStart;
+                        action.Invoke();
+                        break;
+                    }
+                }
+
+                yield return null;
             }
         }
 
         public void Revive()
         {
+            Debug.Log("In Revive | isDead="+isDead );
             if (!isReviveSequence)
             {
+                Invisible(true);
+                currentHealth = maxHealth;
                 isDead = false;
                 myTransform.position = spawnPosition;
                 ZeroVelocity();
                 reviveStartTime = Time.time;
-                isReviveSequence = true;
+                /*RTool.WaitAndRunAction(1f,
+                    () =>
+                    {*/
+                        isReviveSequence = true;
 
-                currentHealth = maxHealth;
+                        currentHealth = maxHealth;
 
-                GetComponent<Collider2D>().enabled = false;
+                        GetComponent<Collider2D>().enabled = false;
 
-                leftWing.SetActive(true);
-                rightWing.SetActive(true);
-                halo.SetActive(true);
+                        leftWing.SetActive(true);
+                        rightWing.SetActive(true);
+                        halo.SetActive(true);/*
+                    }
+                );*/
             }
             else
             {
@@ -356,6 +432,7 @@ namespace KRaB.Split.Player
                 );
                 if (reviveTimeRatio >= 1)
                 {
+                    isDead = false;
                     isRevive = false;
                     isReviveSequence = false;
 
@@ -643,6 +720,21 @@ namespace KRaB.Split.Player
                 }
 
                 yield return null;
+            }
+        }
+
+        void Invisible(bool state)
+        {
+            if (lastRoutine != null) StopCoroutine(lastRoutine);
+            for (int i = 0; i < sprites.Length; ++i)
+            {
+                if (sprites[i].gameObject.name != gravestone.gameObject.name)
+                {
+                    Color temp = sprites[i].color;
+                    temp.a = state ? 1 : 0;
+                    sprites[i].color = temp;
+                }
+                
             }
         }
     }
