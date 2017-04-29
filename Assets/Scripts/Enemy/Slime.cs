@@ -93,7 +93,7 @@ namespace KRaB.Split.Enemy
             {
                 if (collision.gameObject.GetComponent<Transform>().tag == "Player")
                 {
-                    if (Parent != null)
+                    if (Parent != null && !player.isDead)
                     {
                         player.Damage(Parent.Damage);
                         damageTime = Time.time + Parent.DamageDelay;
