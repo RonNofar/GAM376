@@ -81,7 +81,7 @@ namespace KRaB.Split.Manager
 
         // Use this for initialization
         void Start() {
-            Debug.Log(savedState);
+            //Debug.Log(savedState);
             if (savedState != GameState.none)
             {
                 gameState = savedState; // << TO BE TAKEN OUT <<<
