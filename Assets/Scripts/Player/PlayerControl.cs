@@ -570,7 +570,7 @@ namespace KRaB.Split.Player
             anim.SetTrigger("Damaged");
             if (currentHealth - damage <= 0)
             {
-                StartCoroutine(HealthChange(0 - currentHealth));
+                //StartCoroutine(HealthChange(0 - currentHealth));
                 currentHealth = 0f;
                 Death();
             }
