@@ -22,6 +22,7 @@ namespace External
 
         private int tauntIndex;                 // The index of the taunts array indicating the most recent taunt.
         private Transform groundCheck;          // A position marking where to check if the player is grounded.
+        private Transform EXTRAgroundCheck;          // A position marking where to check if the player is grounded.
         private bool grounded = false;          // Whether or not the player is grounded.
         protected Animator anim;                  // Reference to the player's animator component.
 
@@ -30,6 +31,7 @@ namespace External
         {
             // Setting up references.
             groundCheck = transform.Find("groundCheck");
+            EXTRAgroundCheck = transform.Find("groundCheckEXTRA");
             anim = GetComponent<Animator>();
         }
 
@@ -38,7 +40,7 @@ namespace External
         {
             // The player is grounded if a linecast to the groundcheck position hits anything on the ground layer.
             grounded = Physics2D.Linecast(transform.position, groundCheck.position, 1 << LayerMask.NameToLayer("Ground"));
-
+            anim.SetBool("Grounded", Physics2D.Linecast(transform.position, EXTRAgroundCheck.position, 1 << LayerMask.NameToLayer("Ground")));
             // If the jump button is pressed and the player is grounded then the player should jump.
             if (Input.GetButtonDown("Jump") && grounded)
                 jump = true;
