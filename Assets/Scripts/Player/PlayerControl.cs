@@ -593,7 +593,7 @@ namespace KRaB.Split.Player
                     damageColor,
                     flashTime)
                 );
-                StartCoroutine(HealthChange(-damage));
+                //StartCoroutine(HealthChange(-damage));
                 currentHealth -= damage;
                 audio.Play();
             }
@@ -610,7 +610,7 @@ namespace KRaB.Split.Player
             float temp = currentHealth + amount;
             if (temp >= maxHealth)
             {
-                StartCoroutine(HealthChange(maxHealth - currentHealth));
+                //StartCoroutine(HealthChange(maxHealth - currentHealth));
                 currentHealth = maxHealth;
             }
             else
@@ -622,7 +622,7 @@ namespace KRaB.Split.Player
                     flashTime)
                 );
                 currentHealth = temp;
-                StartCoroutine(HealthChange(amount));
+                //StartCoroutine(HealthChange(amount));
             }
         }
 
