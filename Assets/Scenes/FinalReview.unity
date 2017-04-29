@@ -15585,7 +15585,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.4964127, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
 --- !u!108 &2857
 Light:
   m_ObjectHideFlags: 0
@@ -24432,7 +24432,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startButton: {fileID: 555536782}
   creditsButton: {fileID: 42783805}
-  exitButton: {fileID: 42783805}
+  exitButton: {fileID: 201096481}
 --- !u!114 &3836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24495,9 +24495,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 2912}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3838
 MonoBehaviour:
@@ -24587,9 +24584,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 2929}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3842
 MonoBehaviour:
@@ -24647,9 +24641,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 2956}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3844
 MonoBehaviour:
@@ -24796,9 +24787,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 2984}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3850
 MonoBehaviour:
@@ -25095,9 +25083,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3042}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3864
 MonoBehaviour:
@@ -25155,9 +25140,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 6
   mySpriteRenderer: {fileID: 3055}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3866
 MonoBehaviour:
@@ -25206,9 +25188,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 3061}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3868
 MonoBehaviour:
@@ -25500,9 +25479,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3145}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3880
 MonoBehaviour:
@@ -25637,6 +25613,9 @@ MonoBehaviour:
   targetSpritePrefab: {fileID: 1890493924233584, guid: b4e961c1bc0bd5142a38c7ffcfcd9390,
     type: 2}
   color: {fileID: 0}
+  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
+    type: 2}
+  healthDropRatio: 0.25
 --- !u!114 &3885
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26092,9 +26071,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3285}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3905
 MonoBehaviour:
@@ -26208,9 +26184,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3315}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3910
 MonoBehaviour:
@@ -26241,9 +26214,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3333}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3912
 MonoBehaviour:
@@ -26292,9 +26262,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3362}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3914
 MonoBehaviour:
@@ -26466,6 +26433,7 @@ MonoBehaviour:
     max: 0
   SpawnerPrefab: {fileID: 1856321804102578, guid: b7287a24858ba484995d72c0c86c3426,
     type: 2}
+  active: []
   maxSpawns: 3
 --- !u!114 &3921
 MonoBehaviour:
@@ -26612,9 +26580,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3444}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3929
 MonoBehaviour:
@@ -26645,9 +26610,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 4
   mySpriteRenderer: {fileID: 3458}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3930
 MonoBehaviour:
@@ -26696,9 +26658,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3470}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3932
 MonoBehaviour:
@@ -26847,9 +26806,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 7
   mySpriteRenderer: {fileID: 3533}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3939
 MonoBehaviour:
@@ -26999,9 +26955,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 8
   mySpriteRenderer: {fileID: 3588}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3945
 MonoBehaviour:
@@ -27091,9 +27044,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 4
   mySpriteRenderer: {fileID: 3633}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!114 &3950
 MonoBehaviour:
@@ -31332,9 +31282,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 4
   mySpriteRenderer: {fileID: 257890722}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!58 &257890720
 CircleCollider2D:
@@ -37628,9 +37575,6 @@ MonoBehaviour:
   yDampner: 1
   maxDistance: 10
   mySpriteRenderer: {fileID: 657377637}
-  healthDropPrefab: {fileID: 1914694481313336, guid: 4c671b3d9824a8d47920c09384e41e4b,
-    type: 2}
-  healthDropRatio: 0.25
   button: {fileID: 11400000, guid: 7958a7cdd3b785f40b9c1ec5420876c1, type: 2}
 --- !u!58 &657377635
 CircleCollider2D:

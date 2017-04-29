@@ -50,6 +50,12 @@ namespace KRaB.Split.Util
         [SerializeField]
         private KRaB.Enemy.Colors.PrimaryColor color;
 
+        [Header("Health Drop")]
+        [SerializeField]
+        private GameObject healthDropPrefab;
+        [SerializeField]
+        private float healthDropRatio = 0.5f;
+
         private Transform myTransform;
         private Transform toFollow;
 
@@ -222,6 +228,11 @@ namespace KRaB.Split.Util
                 KRaB.Enemy.Colors.EnemyColor c = s.ColorData - color;
                 if (c == (MonoBehaviour)null)
                 {
+                    if (!Manager.GameMaster.Instance.isQuitting)
+                    {
+                        if (Random.Range(0f, 1f) < healthDropRatio)
+                            Instantiate(healthDropPrefab, obj.GetComponent<Transform>().position, GetComponent<Transform>().rotation);
+                    }
                     Destroy(obj);
                     return;
                 }
