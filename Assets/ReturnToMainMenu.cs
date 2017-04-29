@@ -6,6 +6,7 @@ public class ReturnToMainMenu : MonoBehaviour {
 
     public void onCLick()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        KRaB.Split.Manager.GameMaster.Instance.gameObject.GetComponent<AudioSource>().Play();
+        KRaB.Split.Manager.GameMaster.Instance.gameState = KRaB.Split.Manager.GameMaster.GameState.MainMenu;//UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 }
