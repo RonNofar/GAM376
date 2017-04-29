@@ -8,22 +8,17 @@ namespace KRaB.Split.Enemy
     public class Slime : Enemy, ColoredObject
     {
         [SerializeField]
-        private ColorManager.eColors color;
-        public ColorManager.eColors Color
+        private KRaB.Enemy.Colors.EnemyColor colorData;
+        public KRaB.Enemy.Colors.EnemyColor ColorData
         {
-            get { return color; }
+            get { return colorData; }
             set
             {
-                color = value;
-                mySpriteRenderer.color = ColorManager.GetColor(color);
+                colorData = value;
+                mySpriteRenderer.color = colorData.color;
             }
         }
-
-        [Header("Damage")]
-        [SerializeField]
-        private float damage = 2f;
-        [SerializeField]
-        private Util.RTool.FloatRange damageDelay;
+        
         private float damageTime = 0f;
 
         [Header("Movement")]
@@ -52,12 +47,14 @@ namespace KRaB.Split.Enemy
         private float delayTime = 0f;
         private bool isBounce = false;
         private new AudioSource audio;
+        [SerializeField]
+        private Environment.SoundGroup button;
 
         // Use this for initialization
         protected override void Start()
         {
             base.Start();
-            Color = color;
+            ColorData = colorData;
             audio = GetComponent<AudioSource>();
         }
 
@@ -96,11 +93,13 @@ namespace KRaB.Split.Enemy
             {
                 if (collision.gameObject.GetComponent<Transform>().tag == "Player")
                 {
-                    player.Damage(damage);
-                    damageTime = Time.time + damageDelay.RandomInRange;
+                    if (Parent != null)
+                    {
+                        player.Damage(Parent.Damage);
+                        damageTime = Time.time + Parent.DamageDelay;
+                    }
                 }
             }
-
         }
 
 
@@ -114,13 +113,13 @@ namespace KRaB.Split.Enemy
 
 
             Vector2 bias=new Vector2();
-            if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < maxDistance)
+            if (Vector3.Distance(playerTransform.position, GetComponent<Transform>().position) < (Parent?Parent.SearchDistance:maxDistance))
             {
                 bias = new Vector2(
                             (playerTransform.position.x - transform.position.x) / xDampner * jumpForce.RandomInRange,
                             (playerTransform.position.y - transform.position.y) / yDampner * jumpForce.RandomInRange + minimumVerticleJumpForce
                     );
-                audio.Play();
+                button.Play(audio);
             }
             if(Parent)
                 move = Parent.clampJump(move+bias);

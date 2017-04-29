@@ -15,9 +15,7 @@ namespace KRaB.Split.Enemy
         [SerializeField]
         private GameObject enemy;
         [SerializeField]
-        private ColorManager.eColors colorType;
-        [SerializeField]
-        private RTool.FloatRange colorRange;
+        private KRaB.Enemy.Colors.EnemyColor[] possibleSpawns;
 
         [Header("Runtime Linking", order = 101)]
         [SerializeField]
@@ -67,10 +65,9 @@ namespace KRaB.Split.Enemy
             {
                 if (parent.spawn)
                 {
-                    Debug.Log("Spawn Continues");
-                    enemy.GetComponent<Slime>().Color = (UI.ColorManager.eColors)(1 << (Random.Range((int)colorRange.min, (int)colorRange.max)));
+                    KRaB.Enemy.Colors.EnemyColor m = possibleSpawns[Random.Range(0, possibleSpawns.Length)];
                     GameObject temp = Instantiate(enemy);
-                    temp.GetComponent<Slime>().Parent = parent;
+                    temp.GetComponent<Slime>().ColorData = m;
                     temp.transform.position = transform.position;
                 }
                 yield return new WaitForSeconds(enemySpawnDelay.RandomInRange);

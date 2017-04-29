@@ -25,7 +25,7 @@ namespace KRaB.Split.Util
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            Debug.Log("Trigger");
+            //Debug.Log("Trigger");
             if (!isTriggered)
             {
                 if (other.gameObject.tag == "Player")
